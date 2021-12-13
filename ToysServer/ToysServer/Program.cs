@@ -5,17 +5,16 @@ using ToysServer.Model;
 
 namespace ToysServer
 {
-	class Program
-	{
-		static DBWorker worker;
+    class Program
+    {
+        static void Main(string[] args)
+        {
+            var server = new Server("127.0.0.1", 8888);
+			Console.WriteLine("Запуск сервера...");
+            server.Start();
+            Console.WriteLine("Сервер запущен!");
 
-		static void Main(string[] args)
-		{
-			worker = new DBWorker("DB\\ToysBD.db");
-			var rows = worker.LoadJournals();
-
-			foreach (var i in rows)
-				Console.WriteLine(i.Count);
-		}
-	}
+            Console.ReadKey();
+        }
+    }
 }

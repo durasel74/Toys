@@ -6,6 +6,9 @@ using ToysServer.Model;
 
 namespace ToysServer.DB
 {
+	/// <summary>
+	/// Отвечает за чтение данных из базы данных.
+	/// </summary>
 	public class DBSelector
 	{
 		private SQLiteConnection connection;
@@ -16,6 +19,9 @@ namespace ToysServer.DB
 			this.connection = connection;
 		}
 
+		/// <summary>
+		/// Загружает указанную таблицу.
+		/// </summary>
 		public DataTable LoadTable(string tableName, string fields = "*")
 		{
 			try
@@ -30,22 +36,9 @@ namespace ToysServer.DB
 			catch { throw new Exception("Таблица не найдена"); }
 		}
 
-		//public DataTable LoadAllTables(string fields = "*")
-		//{
-		//	try
-		//	{
-		//		command = new SQLiteCommand(connection);
-		//		command.CommandText = $"SELECT {fields} FROM Orders " +
-		//		$"INNER JOIN Clients ON Orders.id_client = Clients.id_client " +
-		//		$"INNER JOIN Products ON Orders.id_product = Products.id_product";
-		//		DataTable data = new DataTable();
-		//		SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
-		//		adapter.Fill(data);
-		//		return data;
-		//	}
-		//	catch { throw new Exception("Таблица не найдена"); }
-		//}
-
+		/// <summary>
+		/// Загружает таблицу Склад.
+		/// </summary>
 		public List<Sklad> SelectSklad()
 		{
 			DataTable dataTable = LoadTable("Sklad");
@@ -62,6 +55,9 @@ namespace ToysServer.DB
 			return sklads;
 		}
 
+		/// <summary>
+		/// Загружает таблицу Покупатель.
+		/// </summary>
 		public List<Client> SelectClient()
 		{
 			DataTable dataTable = LoadTable("Client");
@@ -79,6 +75,9 @@ namespace ToysServer.DB
 			return clients;
 		}
 
+		/// <summary>
+		/// Загружает таблицу Продавец.
+		/// </summary>
 		public List<Seller> SelectSeller()
 		{
 			DataTable dataTable = LoadTable("Seller");
@@ -96,6 +95,9 @@ namespace ToysServer.DB
 			return sellers;
 		}
 
+		/// <summary>
+		/// Загружает таблицу Игрушки.
+		/// </summary>
 		public List<Toy> SelectToy()
 		{
 			DataTable dataTable = LoadTable("Toys");
@@ -116,6 +118,9 @@ namespace ToysServer.DB
 			return toys;
 		}
 
+		/// <summary>
+		/// Загружает таблицу Журнал.
+		/// </summary>
 		public List<Journal> SelectJournal()
 		{
 			DataTable dataTable = LoadTable("Journal");

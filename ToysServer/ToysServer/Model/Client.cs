@@ -2,6 +2,9 @@
 
 namespace ToysServer.Model
 {
+	/// <summary>
+	/// Покупатель из базы данных.
+	/// </summary>
 	public class Client
 	{
 		public long IdClient { get; set; }

@@ -44,21 +44,5 @@ namespace Test
 		{
 			Environment.Exit(0);
 		}
-
-		// private void SearchProducts(object sender, TextChangedEventArgs e)
-		// {
-		// 	viewModel.CurrentTab = "Products";
-		// 	viewModel.SearchString = ProductsText.Text;
-		// }
-		// private void SearchClients(object sender, TextChangedEventArgs e)
-		// {
-		// 	viewModel.CurrentTab = "Clients";
-		// 	viewModel.SearchString = ClientsText.Text;
-		// }
-		// private void SearchOrders(object sender, TextChangedEventArgs e)
-		// {
-		// 	viewModel.CurrentTab = "Orders";
-		// 	viewModel.SearchString = OrdersText.Text;
-		// }
 	}
 }

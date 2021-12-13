@@ -6,6 +6,9 @@ using ToysServer.Model;
 
 namespace ToysServer.DB
 {
+	/// <summary>
+	/// Является прослойкой между приложением и базой данных.
+	/// </summary>
 	public class DBWorker : IDisposable
 	{
 		private SQLiteConnection connection;

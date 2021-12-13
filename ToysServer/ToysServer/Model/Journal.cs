@@ -2,6 +2,9 @@
 
 namespace ToysServer.Model
 {
+	/// <summary>
+	/// Журнал из базы данных.
+	/// </summary>
 	public class Journal
 	{
 		public long Id { get; set; }
