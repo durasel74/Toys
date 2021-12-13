@@ -12,3 +12,6 @@
 /ToysClient/ToysClient/obj/Debug/netcoreapp3.1/ToysClient.genruntimeconfig.cache
 /ToysClient/.vs/ToysClient
 /ToysClient/ToysClient/obj
+/ToysServer/.vs/ToysServer/v16
+/ToysServer/ToysServer/obj
+/ToysServer/ToysServer/bin/Debug/netcoreapp3.1
