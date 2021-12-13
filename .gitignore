@@ -1,0 +1,12 @@
+﻿################################################################################
+# Данный GITIGNORE-файл был автоматически создан Microsoft(R) Visual Studio.
+################################################################################
+
+/ToysClient/ToysClient/bin/Debug/netcoreapp3.1
+/ToysClient/ToysClient/obj/Debug/netcoreapp3.1/OldSources/Views
+/ToysClient/ToysClient/obj/Debug/netcoreapp3.1/View
+/ToysClient/ToysClient/obj/Debug/netcoreapp3.1/ToysClient_MarkupCompile.lref
+/ToysClient/ToysClient/obj/Debug/netcoreapp3.1/ToysClient.g.resources
+/ToysClient/ToysClient/obj/Debug/netcoreapp3.1/ToysClient_MarkupCompile.cache
+/ToysClient/ToysClient/obj/Debug/netcoreapp3.1/ToysClient.pdb
+/ToysClient/ToysClient/obj/Debug/netcoreapp3.1/ToysClient.genruntimeconfig.cache
