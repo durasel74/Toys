@@ -27,7 +27,7 @@
             <Setter Property="Width" Value="80"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Content" Value="Обновить"/>
-            <Setter Property="Command" Value="{Binding UpdateCommand}"/>
+            <!--<Setter Property="Command" Value="{Binding UpdateCommand}"/>-->
             <Style.Triggers>
                 <DataTrigger Binding="{Binding UserIsAdmin}" Value="False">
                     <Setter Property="IsEnabled" Value="False"/>
@@ -59,7 +59,7 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        
+
         <!--#region Меню -->
         <Menu Grid.Row="0" VerticalAlignment="Top">
             <MenuItem FontSize="16" Header="Система">
@@ -89,7 +89,9 @@
 
         <!--#region Контент -->
         <TabControl Grid.Row="2" FontSize="18">
-            <TabItem Header="Продукты">
+            
+            <!--#region Покупатели -->
+            <TabItem Header="Покупатели">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
@@ -97,90 +99,197 @@
                     </Grid.RowDefinitions>
 
                     <DataGrid Grid.Row="0" 
-                          ColumnHeaderStyle="{StaticResource HeaderStyle}"
-                          ItemsSource="{Binding Products}" 
-                          AutoGenerateColumns="False"
-                          ColumnHeaderHeight="40"
-                          RowHeight="40"
-                          FontSize="18">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="Название" 
-                                                IsReadOnly="True" 
-                                                Binding="{Binding Title}"/>
-                            <DataGridTextColumn Header="Стоимость"
-                                                Binding="{Binding Cost}"/>
-                            <DataGridTextColumn Header="Дата выпуска" 
-                                                IsReadOnly="True" 
-                                                Binding="{Binding ReleaseDate}"/>
-                            <DataGridTextColumn Header="Описание"
-                                                Binding="{Binding Description}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-                        <Button Style="{StaticResource UpdateButtonStyle}"
-                                CommandParameter="Products"/>
-                        <Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-
-            <TabItem Header="Клиенты">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="40"/>
-                    </Grid.RowDefinitions>
-
-                    <DataGrid Grid.Row="0" 
-                          ColumnHeaderStyle="{StaticResource HeaderStyle}"
-                          ItemsSource="{Binding Clients}" 
-                          AutoGenerateColumns="False"
-                          ColumnHeaderHeight="40"
-                          RowHeight="40"
-                          FontSize="18">
-                        <DataGrid.Columns>
-                            <DataGridTextColumn Header="ФИО" IsReadOnly="True" 
-                                                Binding="{Binding Fio}"/>
-                            <DataGridTextColumn Header="Телефон" 
-                                                Binding="{Binding PhoneNumber}"/>
-                        </DataGrid.Columns>
-                    </DataGrid>
-                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-                        <Button Style="{StaticResource UpdateButtonStyle}"
-                                CommandParameter="Clients"/>
-                        <Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Clients"/>
-                    </StackPanel>
-                </Grid>
-            </TabItem>
-
-            <TabItem Header="Заказы">
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
-                    </Grid.RowDefinitions>
-
-                    <DataGrid Grid.Row="0" ItemsSource="{Binding Orders}"
                               ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                              ItemsSource="{Binding Clients}" 
                               AutoGenerateColumns="False" RowHeight="40" 
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="Клиент" IsReadOnly="True" 
-                                            Binding="{Binding ClientName}"/>
-                            <DataGridTextColumn Header="Продукт" IsReadOnly="True" 
-                                            Binding="{Binding ProductName}"/>
-                            <DataGridTextColumn Header="Количество" IsReadOnly="True" 
-                                            Binding="{Binding Count}"/>
-                            <DataGridTextColumn Header="Дата" IsReadOnly="True" 
-                                            Binding="{Binding Date}"/>
+                            <DataGridTextColumn Header="ID" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding IdClient}"/>
+                            <DataGridTextColumn Header="ФИО" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding Sfm}"/>
+                            <DataGridTextColumn Header="Стоимость"
+                                                IsReadOnly="True"
+                                                Binding="{Binding PhoneNumber}"/>
                         </DataGrid.Columns>
                     </DataGrid>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                Command="{Binding ClientGetCommand}"/>
+                        <Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>
+                    </StackPanel>
                 </Grid>
             </TabItem>
+            <!--#endregion-->
+
+            <!--#region Продавцы -->
+            <TabItem Header="Продавцы">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" 
+                              ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                              ItemsSource="{Binding Sellers}" 
+                              AutoGenerateColumns="False" RowHeight="40" 
+                              ColumnHeaderHeight="40" FontSize="18">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding IdSeller}"/>
+                            <DataGridTextColumn Header="ФИО" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding Sfm}"/>
+                            <DataGridTextColumn Header="Стоимость"
+                                                IsReadOnly="True"
+                                                Binding="{Binding PhoneNumber}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                Command="{Binding SellerGetCommand}"/>
+                        <Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Склады -->
+            <TabItem Header="Склады">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" 
+                              ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                              ItemsSource="{Binding Sklads}" 
+                              AutoGenerateColumns="False" RowHeight="40" 
+                              ColumnHeaderHeight="40" FontSize="18">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                                IsReadOnly="True"
+                                                Binding="{Binding IdSklad}"/>
+                            <DataGridTextColumn Header="Адрес"
+                                                IsReadOnly="True"
+                                                Binding="{Binding Address}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                Command="{Binding SkladGetCommand}"/>
+                        <Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Игрушки -->
+            <TabItem Header="Игрушки">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" 
+                              ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                              ItemsSource="{Binding Toys}" 
+                              AutoGenerateColumns="False" RowHeight="40" 
+                              ColumnHeaderHeight="40" FontSize="18">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                                IsReadOnly="True" 
+                                                Binding="{Binding IdToy}"/>
+                            <DataGridTextColumn Header="ID склада" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding IdSklad}"/>
+                            <DataGridTextColumn Header="Название" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding Name}"/>
+                            <DataGridTextColumn Header="Стоимость" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding Cost}"/>
+                            <DataGridTextColumn Header="Дата выпуска"
+                                                IsReadOnly="True"
+                                                Binding="{Binding ReleaseDate}"/>
+                            <DataGridTextColumn Header="Описание"
+                                                IsReadOnly="True"
+                                                Binding="{Binding Info}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                Command="{Binding ToyGetCommand}"/>
+                        <Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+
+            <!--#region Журнал -->
+            <TabItem Header="Журнал">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="40"/>
+                    </Grid.RowDefinitions>
+
+                    <DataGrid Grid.Row="0" 
+                              ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                              ItemsSource="{Binding Journals}" 
+                              AutoGenerateColumns="False" RowHeight="40" 
+                              ColumnHeaderHeight="40" FontSize="18">
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="ID"
+                                                IsReadOnly="True" 
+                                                Binding="{Binding Id}"/>
+                            <DataGridTextColumn Header="ID игрушки" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding IdToy}"/>
+                            <DataGridTextColumn Header="ID покупателя" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding IdClient}"/>
+                            <DataGridTextColumn Header="ID продовца" 
+                                                IsReadOnly="True" 
+                                                Binding="{Binding IdSeller}"/>
+                            <DataGridTextColumn Header="Количество"
+                                                IsReadOnly="True"
+                                                Binding="{Binding Count}"/>
+                            <DataGridTextColumn Header="Дата"
+                                                IsReadOnly="True"
+                                                Binding="{Binding Date}"/>
+                        </DataGrid.Columns>
+                    </DataGrid>
+
+                    <StackPanel Grid.Row="1" Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                Command="{Binding JournalGetCommand}"/>
+                        <Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+            
         </TabControl>
         <!--#endregion-->
     </Grid>
