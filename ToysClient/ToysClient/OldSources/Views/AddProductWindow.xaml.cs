@@ -14,27 +14,27 @@ namespace Test
 {
 	public partial class AddProductWindow : Window
 	{
-		private ProductObject productObject;
+		//private ProductObject productObject;
 
 		public AddProductWindow()
 		{
 			InitializeComponent();
 		}
-		public AddProductWindow(ProductObject productObject) : this()
-		{
-			this.productObject = productObject;
-			DataContext = productObject;
-		}
+		//public AddProductWindow(ProductObject productObject) : this()
+		//{
+		//	this.productObject = productObject;
+		//	DataContext = productObject;
+		//}
 
-		private void CreateClick(object sender, RoutedEventArgs e)
-		{
-			var validationResult = productObject.ValidationProduct();
-			if (validationResult) this.DialogResult = true;
-			else MessageBox.Show("Данные о продукте заполнены неверно");
-		}
-		private void CancelClick(object sender, RoutedEventArgs e)
-		{
-			this.DialogResult = false;
-		}
+		//private void CreateClick(object sender, RoutedEventArgs e)
+		//{
+		//	var validationResult = productObject.ValidationProduct();
+		//	if (validationResult) this.DialogResult = true;
+		//	else MessageBox.Show("Данные о продукте заполнены неверно");
+		//}
+		//private void CancelClick(object sender, RoutedEventArgs e)
+		//{
+		//	this.DialogResult = false;
+		//}
 	}
 }

@@ -14,27 +14,27 @@ namespace Test
 {
 	public partial class AddOrderWindow : Window
 	{
-		private OrderObject orderObject;
+		//private OrderObject orderObject;
 
 		public AddOrderWindow()
 		{
 			InitializeComponent();
 		}
-        public AddOrderWindow(OrderObject orderObject) : this()
-        {
-			this.orderObject = orderObject;
-            DataContext = orderObject;
-        }
+  //      public AddOrderWindow(OrderObject orderObject) : this()
+  //      {
+		//	this.orderObject = orderObject;
+  //          DataContext = orderObject;
+  //      }
 
-		private void CreateClick(object sender, RoutedEventArgs e)
-		{
-			var validationResult = orderObject.ValidationOrder();
-			if (validationResult) this.DialogResult = true;
-			else MessageBox.Show("Заказ заполнен неверно");
-		}
-		private void CancelClick(object sender, RoutedEventArgs e)
-		{
-			this.DialogResult = false;
-		}
+		//private void CreateClick(object sender, RoutedEventArgs e)
+		//{
+		//	var validationResult = orderObject.ValidationOrder();
+		//	if (validationResult) this.DialogResult = true;
+		//	else MessageBox.Show("Заказ заполнен неверно");
+		//}
+		//private void CancelClick(object sender, RoutedEventArgs e)
+		//{
+		//	this.DialogResult = false;
+		//}
 	}
 }

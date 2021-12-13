@@ -162,10 +162,10 @@
         <Border Grid.Row="3" Background="#DDD" Margin="0,1,0,0">
             <StackPanel Margin="3" HorizontalAlignment="Right"
                         Orientation="Horizontal">
-                <Button Margin="2" Padding="10" HorizontalAlignment="Right" 
+                <!--<Button Margin="2" Padding="10" HorizontalAlignment="Right" 
                         Content="Создать" Click="CreateClick"/>
                 <Button Margin="2" Padding="10" HorizontalAlignment="Right" 
-                        Content="Отмена" Click="CancelClick"/>
+                        Content="Отмена" Click="CancelClick"/>-->
             </StackPanel>
         </Border>
         <!--#endregion-->

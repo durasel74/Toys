@@ -1,7 +1,7 @@
 using System;
 using System.Windows.Input;
 
-namespace Test
+namespace ToysClient
 {
     public class ButtonCommand : ICommand
     {
