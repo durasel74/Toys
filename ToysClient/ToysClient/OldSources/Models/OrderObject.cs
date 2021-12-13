@@ -3,7 +3,7 @@ using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 
-namespace Toys
+namespace Test
 {
 	public class OrderObject : INotifyPropertyChanged
 	{

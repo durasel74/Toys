@@ -14,17 +14,17 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Diagnostics;
 
-namespace Toys
+namespace Test
 {
 	public partial class MainWindow : Window
 	{
-		private ViewModel viewModel;
+		//private ViewModel viewModel;
 
 		public MainWindow()
 		{
 			InitializeComponent();
-			viewModel = new ViewModel();
-			DataContext = viewModel;
+			//viewModel = new ViewModel();
+			//DataContext = viewModel;
 		}
 
 		public void AuthorInfo(object sender, RoutedEventArgs e)

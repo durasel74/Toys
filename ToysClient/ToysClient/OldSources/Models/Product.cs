@@ -2,7 +2,7 @@
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 
-namespace Toys
+namespace Test
 {
 	public class Product : INotifyPropertyChanged
 	{
