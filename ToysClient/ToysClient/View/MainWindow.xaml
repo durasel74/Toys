@@ -26,7 +26,7 @@
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Width" Value="80"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Content" Value="Обновить"/>
+            <Setter Property="Content" Value="Запросить"/>
         </Style>
 
         <Style x:Key="ResetButtonStyle" TargetType="Button">
@@ -301,6 +301,9 @@
                         <Button Style="{StaticResource UpdateButtonStyle}"
                                 HorizontalAlignment="Right"
                                 Command="{Binding RequestCommmand}"/>
+                        <TextBlock Text="{Binding RequestInfo}"
+                                   TextWrapping="Wrap"
+                                   Background="#CCC"/>
                     </StackPanel>
                 </Grid>
             </TabItem>

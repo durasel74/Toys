@@ -14,6 +14,7 @@ namespace ToysClient.VM
 	{
 		private ClientLan client;
 		private string currentRequest;
+		private string requestInfo;
 
 		public ViewModel()
 		{
@@ -26,6 +27,7 @@ namespace ToysClient.VM
 				"Запрос 5",
 			};
 			CurrentRequest = "Запрос 1";
+			
 		}
 
 		public ObservableCollection<Client> Clients { get; set; }
@@ -42,9 +44,38 @@ namespace ToysClient.VM
 			set
 			{
 				currentRequest = value;
+				switch (currentRequest)
+				{
+					case "Запрос 1":
+						RequestInfo = "Вывод склада, с которого была куплена игрушка, ФИО продавца и его номер телефона";
+						break;
+					case "Запрос 2":
+						RequestInfo = "Название игрушки, дата создания и дата ее покупки";
+						break;
+					case "Запрос 3":
+						RequestInfo = "ФИО покупателя, купленная игрушка, стоимость и количество";
+						break;
+					case "Запрос 4":
+						RequestInfo = "ФИО покупателя и адрес склада с которого велась покупка";
+						break;
+					case "Запрос 5":
+						RequestInfo = "Дата, игрушка, количество, стоимость и номер телефона покупателя";
+						break;
+				}
 				OnPropertyChanged("CurrentRequest");
 			}
 		}
+
+		public string RequestInfo
+		{
+			get { return requestInfo; }
+			set
+			{
+				requestInfo = value;
+				OnPropertyChanged("RequestInfo");
+			}
+		}
+
 
 		private ButtonCommand requestCommand;
 		public ButtonCommand RequestCommmand

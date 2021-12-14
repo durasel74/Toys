@@ -69,10 +69,10 @@ namespace ToysServer.DB
 			try
 			{
 				command = new SQLiteCommand(connection);
-				command.CommandText = "SELECT Sklad.address, Seller.sfm, Seller.phoneNumber FROM " +
+				command.CommandText = "SELECT Client.sfm, Sklad.address FROM " +
 					"Journal JOIN Toys ON Journal.idToy = Toys.idToy " +
 					"JOIN Sklad ON Toys.idSklad = Sklad.idSklad " +
-					"JOIN Seller ON Journal.idSeller = Seller.idSeller";
+					"JOIN Client ON Journal.idClient = Client.idClient";
 				DataTable data = new DataTable();
 				SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
 				adapter.Fill(data);
@@ -86,10 +86,9 @@ namespace ToysServer.DB
 			try
 			{
 				command = new SQLiteCommand(connection);
-				command.CommandText = "SELECT Sklad.address, Seller.sfm, Seller.phoneNumber FROM " +
+				command.CommandText = "SELECT Journal.date, Toys.name, Journal.count, Toys.cost, Client.phoneNumber FROM " +
 					"Journal JOIN Toys ON Journal.idToy = Toys.idToy " +
-					"JOIN Sklad ON Toys.idSklad = Sklad.idSklad " +
-					"JOIN Seller ON Journal.idSeller = Seller.idSeller";
+					"JOIN Client ON Journal.idClient = Client.idClient";
 				DataTable data = new DataTable();
 				SQLiteDataAdapter adapter = new SQLiteDataAdapter(command);
 				adapter.Fill(data);
