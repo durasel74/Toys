@@ -21,29 +21,28 @@
             <Setter Property="Cursor" Value="Hand" />
         </Style>
 
-        <Style x:Key="UpdateButtonStyle" TargetType="Button">
+        <Style x:Key="ButtonStyle" TargetType="Button">
             <Setter Property="Margin" Value="3"/>
             <Setter Property="Padding" Value="5"/>
             <Setter Property="Width" Value="80"/>
             <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Content" Value="Запросить"/>
-        </Style>
-
-        <Style x:Key="ResetButtonStyle" TargetType="Button">
-            <Setter Property="Margin" Value="3"/>
-            <Setter Property="Padding" Value="5"/>
-            <Setter Property="Width" Value="80"/>
-            <Setter Property="FontSize" Value="14"/>
-            <Setter Property="Content" Value="Сбросить"/>
-            <Setter Property="Command" Value="{Binding ResetCommand}"/>
             <Style.Triggers>
-                <DataTrigger Binding="{Binding UserIsAdmin}" Value="False">
-                    <Setter Property="IsEnabled" Value="False"/>
-                </DataTrigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Visibility" Value="Collapsed"/>
+                </Trigger>
             </Style.Triggers>
         </Style>
 
-        <Style x:Key="CreateProductStyle" TargetType="Button">
+        <Style x:Key="UpdateButtonStyle" TargetType="Button"
+               BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Content" Value="Запросить"/>
+            <Setter Property="Command" Value="{Binding GetCommand}"/>
+        </Style>
+
+        <Style x:Key="AddButtonStyle" TargetType="Button"
+               BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Content" Value="Добавить"/>
+            <Setter Property="Command" Value="{Binding AddCommand}"/>
             <Style.Triggers>
                 <DataTrigger Binding="{Binding UserIsAdmin}" Value="False">
                     <Setter Property="IsEnabled" Value="False"/>
@@ -71,14 +70,15 @@
         <!--#endregion-->
 
         <!--#region Контент -->
-        <TabControl Grid.Row="1" FontSize="18">
+        <TabControl Grid.Row="1" FontSize="18"
+                    SelectionChanged="TabChanged">
             
             <!--#region Покупатели -->
             <TabItem Header="Покупатели">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid Grid.Row="0" 
@@ -101,11 +101,10 @@
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
-                        <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding GetCommand}"
-                                CommandParameter="getclients"/>
-                        <!--<Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>-->
+                        <Button Style="{StaticResource AddButtonStyle}"
+                                CommandParameter="addclient"/>
+                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getclients"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -116,7 +115,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid Grid.Row="0" 
@@ -139,11 +138,10 @@
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
-                        <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding GetCommand}"
-                                CommandParameter="getsellers"/>
-                        <!--<Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>-->
+                        <Button Style="{StaticResource AddButtonStyle}"
+                                CommandParameter="addclient"/>
+                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getsellers"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -154,7 +152,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid Grid.Row="0" 
@@ -174,11 +172,10 @@
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
-                        <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding GetCommand}"
-                                CommandParameter="getsklads"/>
-                        <!--<Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>-->
+                        <Button Style="{StaticResource AddButtonStyle}"
+                                CommandParameter="addclient"/>
+                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getsklads"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -189,7 +186,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid Grid.Row="0" 
@@ -221,11 +218,10 @@
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
-                        <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding GetCommand}"
-                                CommandParameter="gettoys"/>
-                        <!--<Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>-->
+                        <Button Style="{StaticResource AddButtonStyle}"
+                                CommandParameter="addclient"/>
+                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="gettoys"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -236,7 +232,7 @@
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="40"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
 
                     <DataGrid Grid.Row="0" 
@@ -268,11 +264,10 @@
 
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
-                        <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding GetCommand}"
-                                CommandParameter="getjournals"/>
-                        <!--<Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>-->
+                        <Button Style="{StaticResource AddButtonStyle}"
+                                CommandParameter="addclient"/>
+                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getjournals"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>

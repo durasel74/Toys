@@ -7,6 +7,7 @@ using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
 using Newtonsoft.Json;
 using ToysClient.Model;
+using ToysClient.View;
 
 namespace ToysClient.VM
 {
@@ -15,6 +16,7 @@ namespace ToysClient.VM
 		private ClientLan client;
 		private string currentRequest;
 		private string requestInfo;
+		private bool userIsAdmin;
 
 		public ViewModel()
 		{
@@ -27,7 +29,7 @@ namespace ToysClient.VM
 				"Запрос 5",
 			};
 			CurrentRequest = "Запрос 1";
-			
+			AuthorizationCommand.Execute(null);
 		}
 
 		public ObservableCollection<Client> Clients { get; set; }
@@ -37,6 +39,9 @@ namespace ToysClient.VM
 		public ObservableCollection<Journal> Journals { get; set; }
 		public ObservableCollection<string> RequestVariants { get; set; }
 		public DataTable RequestTable { get; set; }
+		public bool UserIsAdmin => userIsAdmin;
+		public string AdminPassword => "xl107";
+		
 
 		public string CurrentRequest
 		{
@@ -76,7 +81,6 @@ namespace ToysClient.VM
 			}
 		}
 
-
 		private ButtonCommand requestCommand;
 		public ButtonCommand RequestCommmand
 		{
@@ -103,14 +107,88 @@ namespace ToysClient.VM
 				  (getCommand = new ButtonCommand(obj =>
 				  {
 					  var command = obj as string;
-					  if (command != null)
+					  if (command != null && command != String.Empty)
 					  {
-						  var resultRequest = client.SendRequest(command);
+						  string resultRequest = "";
+						  try { resultRequest = client.SendRequest(command); } 
+						  catch { return; }
 						  if (resultRequest == String.Empty) return;
 						  RequestPipeline(command, resultRequest);
 					  }
 				  }));
 			}
+		}
+
+		private ButtonCommand addCommand;
+		public ButtonCommand AddCommand
+		{
+			get
+			{
+				return addCommand ??
+					  (addCommand = new ButtonCommand(obj =>
+					  {
+						  var command = obj as string;
+						  if (command != null && command != String.Empty)
+						  {
+							  //var resultRequest = client.SendRequest(command);
+							  //if (resultRequest == String.Empty) return;
+							  //RequestPipeline(command, resultRequest);
+						  }
+					  }));
+			}
+		}
+
+		//private ButtonCommand addProductCommand;
+		//public ButtonCommand AddProductCommand
+		//{
+		//	get
+		//	{
+		//		return addProductCommand ??
+		//		  (addProductCommand = new ButtonCommand(obj =>
+		//		  {
+		//			  ProductObject productObject = new ProductObject();
+		//			  var addProductWindow = new AddProductWindow(productObject);
+		//			  if (addProductWindow.ShowDialog() == true)
+		//			  {
+		//				  ProductFields productFields = Product.GetFieldsFrame();
+		//				  productFields.title = productObject.Title;
+		//				  productFields.cost = productObject.Cost;
+		//				  productFields.releaseDate = productObject.ReleaseDate;
+		//				  productFields.description = productObject.Description;
+		//				  db.AddProduct(productFields);
+		//				  LoadAllTables();
+		//			  }
+		//		  }));
+		//	}
+		//}
+
+		private ButtonCommand authorizationCommand;
+		public ButtonCommand AuthorizationCommand
+		{
+			get
+			{
+				return authorizationCommand ??
+				  (authorizationCommand = new ButtonCommand(obj =>
+				  {
+					  var authorizationWindow = new AuthorizationWindow(this);
+					  if (authorizationWindow.ShowDialog() == false)
+						  System.Windows.Application.Current.Shutdown();
+				  }));
+			}
+		}
+
+		public void Authorize(bool isAdmin) => userIsAdmin = isAdmin;
+		public string ConvertTabItemToRequest(string header)
+		{
+			return header.ToLower() switch
+			{
+				"покупатели" => "getclients",
+				"продавцы" => "getsellers",
+				"склады" => "getsklads",
+				"игрушки" => "gettoys",
+				"журнал" => "getjournals",
+				_ => ""
+			};
 		}
 
 		private string ConvertRequestVariant(string variant)

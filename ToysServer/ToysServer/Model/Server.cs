@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-//using System.Text.Json;
 using System.Threading.Tasks;
 using System.Data;
 using System.Net;
@@ -81,7 +80,7 @@ namespace ToysServer.Model
                     }
                     while (stream.DataAvailable);
                     var result = ProcessRequest(completeMessage.ToString());
-                    if (result != String.Empty) SendInfo(stream, result);
+                    SendInfo(stream, result);
                 }
             }
             finally

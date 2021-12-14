@@ -18,23 +18,41 @@ namespace ToysClient.View
 {
 	public partial class MainWindow : Window
 	{
+		private ViewModel viewModel;
+
 		public MainWindow()
 		{
 			InitializeComponent();
-			DataContext = new ViewModel();
+			viewModel = new ViewModel();
+			DataContext = viewModel;
 		}
 
-		public void AuthorInfo(object sender, RoutedEventArgs e)
+		private void TabChanged(Object sender, SelectionChangedEventArgs args)
+		{
+			var tc = sender as TabControl;
+			if (tc != null)
+			{
+				var item = tc.SelectedItem as TabItem;
+				var header = item?.Header as string;
+				if (header != null)
+				{
+					string request = viewModel.ConvertTabItemToRequest(header);
+					viewModel.GetCommand.Execute(request);
+				}
+			}
+		}
+
+		private void AuthorInfo(object sender, RoutedEventArgs e)
 		{
 			MessageBox.Show("Автор Коротовский Дмитрий курсант 432 группы ТАТК ГА");
 		}
-		public void ProgramInfo(object sender, RoutedEventArgs e)
+		private void ProgramInfo(object sender, RoutedEventArgs e)
 		{
 			MessageBox.Show("Инструкция:" +
 			"\nИспользуйте вкладки для перемещения по таблицам.\n" +
 			"Кнопка 'Обновить' позволяет выводит актульную информацию с сервера");
 		}
-		public void ExitClick(object sender, RoutedEventArgs e)
+		private void ExitClick(object sender, RoutedEventArgs e)
 		{
 			Environment.Exit(0);
 		}
