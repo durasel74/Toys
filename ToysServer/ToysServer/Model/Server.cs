@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Text.Json;
+//using System.Text.Json;
 using System.Threading.Tasks;
+using System.Data;
 using System.Net;
 using System.Net.Sockets;
+using Newtonsoft.Json;
 using ToysServer.DB;
 
 namespace ToysServer.Model
@@ -90,32 +92,52 @@ namespace ToysServer.Model
         }
 
         // Обработка пришедшего запроса
-        private string ProcessRequest(string message)
+        public string ProcessRequest(string message)
 		{
             string result = "";
 			switch (message.ToLower())
 			{
-                case "getclients":
-                    var clients = dbWorker.LoadClients();
-                    result = JsonSerializer.Serialize(clients);
+				case "getclients":
+					var clients = dbWorker.LoadClients();
+                    result = JsonConvert.SerializeObject(clients);
+					break;
+				case "getsellers":
+					var sellers = dbWorker.LoadSellers();
+					result = JsonConvert.SerializeObject(sellers);
+					break;
+				case "gettoys":
+					var toys = dbWorker.LoadToys();
+					result = JsonConvert.SerializeObject(toys);
+					break;
+				case "getjournals":
+					var journals = dbWorker.LoadJournals();
+					result = JsonConvert.SerializeObject(journals);
+					break;
+				case "getsklads":
+					var sklads = dbWorker.LoadSklads();
+					result = JsonConvert.SerializeObject(sklads);
+					break;
+				case "request1":
+                    var request1 = dbWorker.Request1();
+                    result = JsonConvert.SerializeObject(request1);
                     break;
-                case "getsellers":
-                    var sellers = dbWorker.LoadSellers();
-                    result = JsonSerializer.Serialize(sellers);
+                case "request2":
+                    var request2 = dbWorker.Request2();
+                    result = JsonConvert.SerializeObject(request2);
                     break;
-                case "gettoys":
-                    var toys = dbWorker.LoadToys();
-                    result = JsonSerializer.Serialize(toys);
+                case "request3":
+                    var request3 = dbWorker.Request3();
+                    result = JsonConvert.SerializeObject(request3);
                     break;
-                case "getjournals":
-                    var journals = dbWorker.LoadJournals();
-                    result = JsonSerializer.Serialize(journals);
+                case "request4":
+                    var request4 = dbWorker.Request4();
+                    result = JsonConvert.SerializeObject(request4);
                     break;
-                case "getsklads":
-                    var sklads = dbWorker.LoadSklads();
-                    result = JsonSerializer.Serialize(sklads);
+                case "request5":
+                    var request5 = dbWorker.Request5();
+                    result = JsonConvert.SerializeObject(request5);
                     break;
-			}
+            }
             return result;
 		}
 

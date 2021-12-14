@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using System.Net.Sockets;
+using System.Windows;
 
 namespace ToysClient.Model
 {
@@ -18,11 +19,13 @@ namespace ToysClient.Model
 
 		public string SendRequest(string message)
 		{
-			client = new TcpClient(address, port);
-			Byte[] data = Encoding.UTF8.GetBytes(message);
-			NetworkStream stream = client.GetStream();
+			NetworkStream stream = null;
 			try
 			{
+				client = new TcpClient(address, port);
+				Byte[] data = Encoding.UTF8.GetBytes(message);
+				stream = client.GetStream();
+
 				stream.Write(data, 0, data.Length);
 				Byte[] readingData = new Byte[256];
 				String responseData = String.Empty;
@@ -31,16 +34,19 @@ namespace ToysClient.Model
 				do
 				{
 					numberOfBytesRead = stream.Read(readingData, 0, readingData.Length);
-					completeMessage.AppendFormat("{0}", Encoding.UTF8.GetString(readingData, 0, numberOfBytesRead));
+					completeMessage.AppendFormat("{0}", 
+						Encoding.UTF8.GetString(readingData, 0, numberOfBytesRead));
 				}
 				while (stream.DataAvailable);
 				return completeMessage.ToString();
 			}
+			catch { MessageBox.Show("Ошибка подключения к серверу"); }
 			finally
 			{
-				stream.Close();
-				client.Close();
+				stream?.Close();
+				client?.Close();
 			}
+			return "";
 		}
 	}
 }

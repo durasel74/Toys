@@ -27,12 +27,6 @@
             <Setter Property="Width" Value="80"/>
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Content" Value="Обновить"/>
-            <!--<Setter Property="Command" Value="{Binding UpdateCommand}"/>-->
-            <Style.Triggers>
-                <DataTrigger Binding="{Binding UserIsAdmin}" Value="False">
-                    <Setter Property="IsEnabled" Value="False"/>
-                </DataTrigger>
-            </Style.Triggers>
         </Style>
 
         <Style x:Key="ResetButtonStyle" TargetType="Button">
@@ -42,6 +36,11 @@
             <Setter Property="FontSize" Value="14"/>
             <Setter Property="Content" Value="Сбросить"/>
             <Setter Property="Command" Value="{Binding ResetCommand}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding UserIsAdmin}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
 
         <Style x:Key="CreateProductStyle" TargetType="Button">
@@ -56,7 +55,6 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="25"/>
-            <RowDefinition Height="50"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -72,23 +70,8 @@
         </Menu>
         <!--#endregion-->
 
-        <!--#region Кнопки управления -->
-        <Border Grid.Row="1" Background="#49F">
-            <Grid>
-                <StackPanel Orientation="Horizontal" Margin="8">
-                    <Button Padding="3" FontSize="16" Content="Создать заказ"
-                            Command="{Binding AddOrderCommand}"/>
-                    <Button Style="{StaticResource CreateProductStyle}"
-                            Margin="10,0,0,0" Padding="3" FontSize="16" 
-                            Content="Создать продукт"
-                            Command="{Binding AddProductCommand}"/>
-                </StackPanel>
-            </Grid>
-        </Border>
-        <!--#endregion-->
-
         <!--#region Контент -->
-        <TabControl Grid.Row="2" FontSize="18">
+        <TabControl Grid.Row="1" FontSize="18">
             
             <!--#region Покупатели -->
             <TabItem Header="Покупатели">
@@ -119,9 +102,10 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding ClientGetCommand}"/>
-                        <Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>
+                                Command="{Binding GetCommand}"
+                                CommandParameter="getclients"/>
+                        <!--<Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -156,9 +140,10 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding SellerGetCommand}"/>
-                        <Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>
+                                Command="{Binding GetCommand}"
+                                CommandParameter="getsellers"/>
+                        <!--<Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -190,9 +175,10 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding SkladGetCommand}"/>
-                        <Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>
+                                Command="{Binding GetCommand}"
+                                CommandParameter="getsklads"/>
+                        <!--<Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -236,9 +222,10 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding ToyGetCommand}"/>
-                        <Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>
+                                Command="{Binding GetCommand}"
+                                CommandParameter="gettoys"/>
+                        <!--<Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -282,14 +269,43 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource UpdateButtonStyle}"
-                                Command="{Binding JournalGetCommand}"/>
-                        <Button Style="{StaticResource ResetButtonStyle}"
-                                CommandParameter="Products"/>
+                                Command="{Binding GetCommand}"
+                                CommandParameter="getjournals"/>
+                        <!--<Button Style="{StaticResource ResetButtonStyle}"
+                                CommandParameter="Products"/>-->
                     </StackPanel>
                 </Grid>
             </TabItem>
             <!--#endregion-->
-            
+
+            <!--#region Запросы -->
+            <TabItem Header="Запросы">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="300"/>
+                    </Grid.ColumnDefinitions>
+
+                    <DataGrid Grid.Column="0"
+                              ColumnHeaderStyle="{StaticResource HeaderStyle}"
+                              ItemsSource="{Binding RequestTable}" 
+                              AutoGenerateColumns="True" RowHeight="40" 
+                              ColumnHeaderHeight="40" FontSize="18">
+                    </DataGrid>
+
+                    <StackPanel Grid.Column="1" Margin="10">
+                        <ComboBox HorizontalAlignment="Right"
+                                  ItemsSource="{Binding RequestVariants}"
+                                  SelectedValue="{Binding CurrentRequest, 
+                                    Mode=TwoWay}" Width="200"/>
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                HorizontalAlignment="Right"
+                                Command="{Binding RequestCommmand}"/>
+                    </StackPanel>
+                </Grid>
+            </TabItem>
+            <!--#endregion-->
+
         </TabControl>
         <!--#endregion-->
     </Grid>

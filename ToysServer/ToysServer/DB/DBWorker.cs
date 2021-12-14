@@ -13,9 +13,8 @@ namespace ToysServer.DB
 	{
 		private SQLiteConnection connection;
 		private DBSelector selector;
-		//private DBUpdater updater;
+		private DBRequester requester;
 		//private DBAdder adder;
-		//private DBSearcher searcher;
 
 		public DBWorker(string dataBasePath)
 		{
@@ -23,9 +22,8 @@ namespace ToysServer.DB
 				"FailIfMissing=False");
 			connection.Open();
 			selector = new DBSelector(connection);
-			//updater = new DBUpdater(connection);
+			requester = new DBRequester(connection);
 			//adder = new DBAdder(connection);
-			//searcher = new DBSearcher();
 		}
 		~DBWorker() => Dispose();
 		public virtual void Dispose() => connection.Close();
@@ -36,23 +34,11 @@ namespace ToysServer.DB
 		public List<Toy> LoadToys() => selector.SelectToy();
 		public List<Journal> LoadJournals() => selector.SelectJournal();
 
-		//public List<Client> LoadClients()
-		//{
-		//	return selector.SelectClients();
-		//}
-		//public List<Order> LoadOrders()
-		//{
-		//	return selector.SelectOrders();
-		//}
-
-		//public void UpdateProducts(List<Product> products)
-		//{
-		//	updater.UpdateProducts(products);
-		//}
-		//public void UpdateClients(List<Client> clients)
-		//{
-		//	updater.UpdateClients(clients);
-		//}
+		public DataTable Request1() => requester.Request1();
+		public DataTable Request2() => requester.Request2();
+		public DataTable Request3() => requester.Request3();
+		public DataTable Request4() => requester.Request4();
+		public DataTable Request5() => requester.Request5();
 
 		//public void AddProduct(ProductFields productFields)
 		//{
@@ -65,19 +51,6 @@ namespace ToysServer.DB
 		//public void AddOrder(OrderFields orderFields, long clientId, long productId)
 		//{
 		//	adder.AddOrder(orderFields, clientId, productId);
-		//}
-
-		//public IList<Product> SearchProducts(IList<Product> products, string query)
-		//{
-		//	return searcher.SearchProducts(products, query);
-		//}
-		//public IList<Client> SearchClients(IList<Client> clients, string query)
-		//{
-		//	return searcher.SearchClients(clients, query);
-		//}
-		//public IList<Order> SearchOrders(IList<Order> orders, string query)
-		//{
-		//	return searcher.SearchOrders(orders, query);
 		//}
 	}
 }

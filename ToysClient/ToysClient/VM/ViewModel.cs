@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Text.Json;
+using System.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using Newtonsoft.Json;
 using ToysClient.Model;
 
 namespace ToysClient.VM
@@ -12,9 +13,19 @@ namespace ToysClient.VM
 	public class ViewModel : INotifyPropertyChanged
 	{
 		private ClientLan client;
+		private string currentRequest;
+
 		public ViewModel()
 		{
 			client = new ClientLan("127.0.0.1", 8888);
+			RequestVariants = new ObservableCollection<string>() {
+				"Запрос 1",
+				"Запрос 2",
+				"Запрос 3",
+				"Запрос 4",
+				"Запрос 5",
+			};
+			CurrentRequest = "Запрос 1";
 		}
 
 		public ObservableCollection<Client> Clients { get; set; }
@@ -22,86 +33,123 @@ namespace ToysClient.VM
 		public ObservableCollection<Sklad> Sklads { get; set; }
 		public ObservableCollection<Toy> Toys { get; set; }
 		public ObservableCollection<Journal> Journals { get; set; }
+		public ObservableCollection<string> RequestVariants { get; set; }
+		public DataTable RequestTable { get; set; }
 
-		private ButtonCommand clientGetCommand;
-		public ButtonCommand ClientGetCommand
+		public string CurrentRequest
+		{
+			get { return currentRequest; }
+			set
+			{
+				currentRequest = value;
+				OnPropertyChanged("CurrentRequest");
+			}
+		}
+
+		private ButtonCommand requestCommand;
+		public ButtonCommand RequestCommmand
 		{
 			get
 			{
-				return clientGetCommand ??
-				  (clientGetCommand = new ButtonCommand(obj =>
+				return requestCommand ??
+				  (requestCommand = new ButtonCommand(obj =>
 				  {
-					  var resultRequest = client.SendRequest("getclients");
-					  var result = JsonSerializer.Deserialize<List<Client>>(resultRequest);
-					  Clients = new ObservableCollection<Client>(result);
-					  OnPropertyChanged("Clients");
-					  Console.WriteLine(Clients[0].IdClient);
+					  string command = ConvertRequestVariant(CurrentRequest);
+					  var resultRequest = client.SendRequest(command);
+					  if (resultRequest == String.Empty) return;
+					  RequestTable = JsonConvert.DeserializeObject<DataTable>(resultRequest);
+					  OnPropertyChanged("RequestTable");
 				  }));
 			}
 		}
 
-		private ButtonCommand sellerGetCommand;
-		public ButtonCommand SellerGetCommand
+		private ButtonCommand getCommand;
+		public ButtonCommand GetCommand
 		{
 			get
 			{
-				return sellerGetCommand ??
-				  (sellerGetCommand = new ButtonCommand(obj =>
+				return getCommand ??
+				  (getCommand = new ButtonCommand(obj =>
 				  {
-					  var resultRequest = client.SendRequest("getsellers");
-					  var result = JsonSerializer.Deserialize<List<Seller>>(resultRequest);
-					  Sellers = new ObservableCollection<Seller>(result);
-					  OnPropertyChanged("Sellers");
+					  var command = obj as string;
+					  if (command != null)
+					  {
+						  var resultRequest = client.SendRequest(command);
+						  if (resultRequest == String.Empty) return;
+						  RequestPipeline(command, resultRequest);
+					  }
 				  }));
 			}
 		}
 
-		private ButtonCommand skladGetCommand;
-		public ButtonCommand SkladGetCommand
+		private string ConvertRequestVariant(string variant)
 		{
-			get
+			return variant.ToLower() switch
 			{
-				return skladGetCommand ??
-				  (skladGetCommand = new ButtonCommand(obj =>
-				  {
-					  var resultRequest = client.SendRequest("getsklads");
-					  var result = JsonSerializer.Deserialize<List<Sklad>>(resultRequest);
-					  Sklads = new ObservableCollection<Sklad>(result);
-					  OnPropertyChanged("Sklads");
-				  }));
+				"запрос 1" => "request1",
+				"запрос 2" => "request2",
+				"запрос 3" => "request3",
+				"запрос 4" => "request4",
+				"запрос 5" => "request5",
+				_ => ""
+			};
+		}
+
+		private void RequestPipeline(string command, string json)
+		{
+			switch (command.ToLower())
+			{
+				case "getclients":
+					DeserializeClients(json);
+					break;
+				case "getsellers":
+					DeserializeSellers(json);
+					break;
+				case "getsklads":
+					DeserializeSklads(json);
+					break;
+				case "gettoys":
+					DeserializeToys(json);
+					break;
+				case "getjournals":
+					DeserializeJournals(json);
+					break;
 			}
 		}
 
-		private ButtonCommand toyGetCommand;
-		public ButtonCommand ToyGetCommand
+		private void DeserializeClients(string json)
 		{
-			get
-			{
-				return toyGetCommand ??
-				  (toyGetCommand = new ButtonCommand(obj =>
-				  {
-					  var resultRequest = client.SendRequest("gettoys");
-					  var result = JsonSerializer.Deserialize<List<Toy>>(resultRequest);
-					  Toys = new ObservableCollection<Toy>(result);
-					  OnPropertyChanged("Toys");
-				  }));
-			}
+			var result = JsonConvert.DeserializeObject<List<Client>>(json);
+			Clients = new ObservableCollection<Client>(result);
+			OnPropertyChanged("Clients");
 		}
 
-		private ButtonCommand journalGetCommand;
-		public ButtonCommand JournalGetCommand
+		private void DeserializeSellers(string json)
 		{
-			get
-			{
-				return journalGetCommand ??
-				  (journalGetCommand = new ButtonCommand(obj =>
-				  {
-					  var resultRequest = client.SendRequest("getjournals");
-					  var result = JsonSerializer.Deserialize<List<Journal>>(resultRequest);
-					  Journals = new ObservableCollection<Journal>(result);
-					  OnPropertyChanged("Journals");
-				  }));
-			}
+			var result = JsonConvert.DeserializeObject<List<Seller>>(json);
+			Sellers = new ObservableCollection<Seller>(result);
+			OnPropertyChanged("Sellers");
+		}
+
+		private void DeserializeSklads(string json)
+		{
+			var result = JsonConvert.DeserializeObject<List<Sklad>>(json);
+			Sklads = new ObservableCollection<Sklad>(result);
+			OnPropertyChanged("Sklads");
+		}
+
+		private void DeserializeToys(string json)
+		{
+			var result = JsonConvert.DeserializeObject<List<Toy>>(json);
+			Toys = new ObservableCollection<Toy>(result);
+			OnPropertyChanged("Toys");
+		}
+
+		private void DeserializeJournals(string json)
+		{
+			var result = JsonConvert.DeserializeObject<List<Journal>>(json);
+			Journals = new ObservableCollection<Journal>(result);
+			OnPropertyChanged("Journals");
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
