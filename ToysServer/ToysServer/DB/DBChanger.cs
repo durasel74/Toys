@@ -32,44 +32,58 @@ namespace ToysServer.DB
 			string request;
 			foreach (var client in clients)
 			{
-				request = $"UPDATE Client SET sfm = '{client.Sfm}', phoneNumber = '{client.PhoneNumber}' WHERE idClient = {client.IdClient}";
+				request = $"UPDATE Client SET sfm = '{client.Sfm}', " +
+				$"phoneNumber = '{client.PhoneNumber}' WHERE idClient = {client.IdClient}";
 				ChangeRow(request);
 			}
 		}
 
-		// UPDATE dbname.table1 SET name = ‘Людмила Иванова’ WHERE id = 2;
+		public void ChangeSeller(List<Seller> sellers)
+		{
+			string request;
+			foreach (var seller in sellers)
+			{
+				request = $"UPDATE Seller SET sfm = '{seller.Sfm}', " +
+				$"phoneNumber = '{seller.PhoneNumber}' WHERE idSeller = {seller.IdSeller}";
+				ChangeRow(request);
+			}
+		}
 
+		public void ChangeSklad(List<Sklad> sklads)
+		{
+			string request;
+			foreach (var sklad in sklads)
+			{
+				request = $"UPDATE Sklad SET address = '{sklad.Address}' " +
+					$"WHERE idSklad = {sklad.IdSklad}";
+				ChangeRow(request);
+			}
+		}
 
-		// public void AddSeller(Seller seller)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Seller(sfm, phoneNumber)" +
-		// 		$"VALUES ('{seller.Sfm}', '{seller.PhoneNumber}')";
-		// 	AddRow(request);
-		// }
+		public void ChangeToy(List<Toy> toys)
+		{
+			string request;
+			foreach (var toy in toys)
+			{
+				request = $"UPDATE Toys SET idSklad = {toy.IdSklad}, " +
+				$"name = '{toy.Name}', cost = {toy.Cost}, " +
+				$"releaseDate = '{toy.ReleaseDate}', info = '{toy.Info}' " +
+				$"WHERE idToy = {toy.IdToy}";
+				ChangeRow(request);
+			}
+		}
 
-		// public void AddSklad(Sklad sklad)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Sklad(address)" +
-		// 		$"VALUES ('{sklad.Address}')";
-		// 	AddRow(request);
-		// }
-
-		// public void AddToy(Toy toy)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Toys(idSklad, name, cost, releaseDate, info)" +
-		// 		$"VALUES ({toy.IdSklad}, '{toy.Name}', {toy.Cost}, '{toy.ReleaseDate}', '{toy.Info}')";
-		// 	AddRow(request);
-		// }
-
-		// public void AddJournal(Journal journal)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Journal(idToy, idClient, idSeller, count, date)" +
-		// 		$"VALUES ({journal.IdToy}, {journal.IdClient}, {journal.IdSeller}, {journal.Count}, '{journal.Date}')";
-		// 	AddRow(request);
-		// }
+		public void ChangeJournal(List<Journal> journals)
+		{
+			string request;
+			foreach (var journal in journals)
+			{
+				request = $"UPDATE Journal SET idToy = {journal.IdToy}, " +
+				$"idClient = {journal.IdClient}, idSeller = {journal.IdSeller}, " +
+				$"count = {journal.Count}, date = '{journal.Date}' " +
+				$"WHERE id = {journal.Id}";
+				ChangeRow(request);
+			}
+		}
 	}
 }

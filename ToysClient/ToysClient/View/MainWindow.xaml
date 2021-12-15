@@ -109,14 +109,11 @@
                               AutoGenerateColumns="False" RowHeight="40" 
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" 
-                                                IsReadOnly="False"
+                            <DataGridTextColumn Header="ID" IsReadOnly="True"
                                                 Binding="{Binding IdClient}"/>
-                            <DataGridTextColumn Header="ФИО" 
-                                                IsReadOnly="False"
+                            <DataGridTextColumn Header="ФИО"
                                                 Binding="{Binding Sfm}"/>
                             <DataGridTextColumn Header="Номер телефона"
-                                                IsReadOnly="False"
                                                 Binding="{Binding PhoneNumber}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -150,7 +147,7 @@
                               AutoGenerateColumns="False" RowHeight="40" 
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID" 
+                            <DataGridTextColumn Header="ID" IsReadOnly="True"
                                                 Binding="{Binding IdSeller}"/>
                             <DataGridTextColumn Header="ФИО" 
                                                 Binding="{Binding Sfm}"/>
@@ -163,6 +160,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addseller"/>
+                        <Button Style="{StaticResource ChangeButtonStyle}"
+                                CommandParameter="changeseller"/>
                         <Button Style="{StaticResource DeleteButtonStyle}"
                                 CommandParameter="deleteseller"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
@@ -186,7 +185,7 @@
                               AutoGenerateColumns="False" RowHeight="40" 
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"
+                            <DataGridTextColumn Header="ID" IsReadOnly="True"
                                                 Binding="{Binding IdSklad}"/>
                             <DataGridTextColumn Header="Адрес"
                                                 Binding="{Binding Address}"/>
@@ -197,6 +196,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addsklad"/>
+                        <Button Style="{StaticResource ChangeButtonStyle}"
+                                CommandParameter="changesklad"/>
                         <Button Style="{StaticResource DeleteButtonStyle}"
                                 CommandParameter="deletesklad"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
@@ -220,14 +221,13 @@
                               AutoGenerateColumns="False" RowHeight="40" 
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"
+                            <DataGridTextColumn Header="ID" IsReadOnly="True"
                                                 Binding="{Binding IdToy}"/>
                             <DataGridTextColumn Header="ID склада" 
                                                 Binding="{Binding IdSklad}"/>
                             <DataGridTextColumn Header="Название" 
                                                 Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Стоимость" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding Cost}"/>
                             <DataGridTextColumn Header="Дата выпуска"
                                                 Binding="{Binding ReleaseDate}"/>
@@ -240,6 +240,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addtoy"/>
+                        <Button Style="{StaticResource ChangeButtonStyle}"
+                                CommandParameter="changetoy"/>
                         <Button Style="{StaticResource DeleteButtonStyle}"
                                 CommandParameter="deletetoy"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
@@ -263,7 +265,7 @@
                               AutoGenerateColumns="False" RowHeight="40" 
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
-                            <DataGridTextColumn Header="ID"
+                            <DataGridTextColumn Header="ID" IsReadOnly="True"
                                                 Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="ID игрушки" 
                                                 Binding="{Binding IdToy}"/>
@@ -282,6 +284,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addjournal"/>
+                        <Button Style="{StaticResource ChangeButtonStyle}"
+                                CommandParameter="changejournal"/>
                         <Button Style="{StaticResource DeleteButtonStyle}"
                                 CommandParameter="deletejournal"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
@@ -316,7 +320,7 @@
                                 Content="Запросить"
                                 Command="{Binding RequestCommmand}"/>
                         <TextBlock Text="{Binding RequestInfo}"
-                                   TextWrapping="Wrap"
+                                   Padding="3" TextWrapping="Wrap"
                                    Background="#CCC"/>
                     </StackPanel>
                 </Grid>

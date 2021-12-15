@@ -214,18 +214,18 @@ namespace ToysClient.VM
 								  case "changeclient":
 									  ChangeClient();
 									  break;
-								//   case "addseller":
-								// 	  AddSeller();
-								// 	  break;
-								//   case "addsklad":
-								// 	  AddSklad();
-								// 	  break;
-								//   case "addtoy":
-								// 	  AddToy();
-								// 	  break;
-								//   case "addjournal":
-								//   	  AddJournal();
-								// 	  break;
+								  case "changeseller":
+									  ChangeSeller();
+									  break;
+								  case "changesklad":
+									  ChangeSklad();
+									  break;
+								  case "changetoy":
+									  ChangeToy();
+									  break;
+								  case "changejournal":
+									  ChangeJournal();
+									  break;
 							  }
 						  }
 					  }));
@@ -515,13 +515,65 @@ namespace ToysClient.VM
 		{
 			List<Client> clients = new List<Client>(Clients);
 			string json = JsonConvert.SerializeObject(clients);
-			string command = "changeclients/" + json;
+			string command = "changeclient/" + json;
 			var resultRequest = client.SendRequest(command);
 			if (resultRequest == String.Empty) return;
 			if (resultRequest.ToLower() != "ok")
 				MessageBox.Show("Запрос на изменение не был выполнен");
 			else
 				GetCommand.Execute("getclients");
+		}
+
+		private void ChangeSeller()
+		{
+			List<Seller> sellers = new List<Seller>(Sellers);
+			string json = JsonConvert.SerializeObject(sellers);
+			string command = "changeseller/" + json;
+			var resultRequest = client.SendRequest(command);
+			if (resultRequest == String.Empty) return;
+			if (resultRequest.ToLower() != "ok")
+				MessageBox.Show("Запрос на изменение не был выполнен");
+			else
+				GetCommand.Execute("getsellers");
+		}
+
+		private void ChangeSklad()
+		{
+			List<Sklad> sklads = new List<Sklad>(Sklads);
+			string json = JsonConvert.SerializeObject(sklads);
+			string command = "changesklad/" + json;
+			var resultRequest = client.SendRequest(command);
+			if (resultRequest == String.Empty) return;
+			if (resultRequest.ToLower() != "ok")
+				MessageBox.Show("Запрос на изменение не был выполнен");
+			else
+				GetCommand.Execute("getsklads");
+		}
+
+		private void ChangeToy()
+		{
+			List<Toy> toys = new List<Toy>(Toys);
+			string json = JsonConvert.SerializeObject(toys);
+			string command = "changetoy/" + json;
+			var resultRequest = client.SendRequest(command);
+			if (resultRequest == String.Empty) return;
+			if (resultRequest.ToLower() != "ok")
+				MessageBox.Show("Запрос на изменение не был выполнен");
+			else
+				GetCommand.Execute("gettoys");
+		}
+
+		private void ChangeJournal()
+		{
+			List<Journal> journals = new List<Journal>(Journals);
+			string json = JsonConvert.SerializeObject(journals);
+			string command = "changejournal/" + json;
+			var resultRequest = client.SendRequest(command);
+			if (resultRequest == String.Empty) return;
+			if (resultRequest.ToLower() != "ok")
+				MessageBox.Show("Запрос на изменение не был выполнен");
+			else
+				GetCommand.Execute("getjournals");
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

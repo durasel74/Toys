@@ -11,7 +11,6 @@ namespace ToysServer
         {
             var server = new Server("127.0.0.1", 8888);
 			Console.WriteLine("Запуск сервера...");
-			//Console.WriteLine(server.ProcessRequest("getclients"));
             server.Start();
             Console.WriteLine("Сервер запущен!");
 

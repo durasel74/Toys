@@ -193,9 +193,48 @@ namespace ToysServer.Model
                     result = ChangeClient();
                     Console.WriteLine("Обновление покупателей");
                     break;
+                case "changeseller":
+                    result = ChangeSeller();
+                    Console.WriteLine("Обновление продавцов");
+                    break;
+                case "changesklad":
+                    result = ChangeSklad();
+                    Console.WriteLine("Обновление складов");
+                    break;
+                case "changetoy":
+                    result = ChangeToy();
+                    Console.WriteLine("Обновление игрушек");
+                    break;
+                case "changejournal":
+                    result = ChangeJournal();
+                    Console.WriteLine("Обновление журнала");
+                    break;
             }
             return result;
 		}
+
+        private string ParseMessage(string message)
+        {
+            var deviderIndex = message.IndexOf('/');
+            string requestAddress = message;
+            if (deviderIndex == -1) jsonMessage = "";
+            else
+            {
+                requestAddress = message.Substring(0, deviderIndex);
+                if (message.Length - 1 == requestAddress.Length)
+                    jsonMessage = "";
+                else
+                    jsonMessage = message.Substring(deviderIndex + 1);
+            }
+            return requestAddress;
+        }
+
+        // Отправляет сообщение клиенту
+        private void SendInfo(NetworkStream stream, string message)
+        {
+            Byte[] responseData = Encoding.UTF8.GetBytes(message);
+            stream.Write(responseData, 0, responseData.Length);
+        }
 
         private string AddClient()
 		{
@@ -334,33 +373,62 @@ namespace ToysServer.Model
             {
                 var clients = JsonConvert.DeserializeObject<List<Client>>(jsonMessage);
                 dbWorker.ChangeClient(clients);
+				result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string ChangeSeller()
+        {
+            string result = "";
+            try
+            {
+                var sellers = JsonConvert.DeserializeObject<List<Seller>>(jsonMessage);
+                dbWorker.ChangeSeller(sellers);
                 result = "OK";
             }
             catch { result = "Error"; }
             return result;
         }
 
-        private string ParseMessage(string message)
-		{
-            var deviderIndex = message.IndexOf('/');
-            string requestAddress = message;
-            if (deviderIndex == -1) jsonMessage = "";
-            else
-			{
-                requestAddress = message.Substring(0, deviderIndex);
-                if (message.Length - 1 == requestAddress.Length)
-                    jsonMessage = "";
-                else
-                    jsonMessage = message.Substring(deviderIndex + 1);
-            }
-            return requestAddress;
-		}
-
-        // Отправляет сообщение клиенту
-		private void SendInfo(NetworkStream stream, string message)
+        private string ChangeSklad()
         {
-			Byte[] responseData = Encoding.UTF8.GetBytes(message);
-			stream.Write(responseData, 0, responseData.Length);
-		}
+            string result = "";
+            try
+            {
+                var sklads = JsonConvert.DeserializeObject<List<Sklad>>(jsonMessage);
+                dbWorker.ChangeSklad(sklads);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string ChangeToy()
+        {
+            string result = "";
+            try
+            {
+                var toys = JsonConvert.DeserializeObject<List<Toy>>(jsonMessage);
+                dbWorker.ChangeToy(toys);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string ChangeJournal()
+        {
+            string result = "";
+            try
+            {
+                var journals = JsonConvert.DeserializeObject<List<Journal>>(jsonMessage);
+                dbWorker.ChangeJournal(journals);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
     }
 }

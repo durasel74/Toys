@@ -37,25 +37,6 @@ namespace ToysServer.DB
 		}
 
 		/// <summary>
-		/// Загружает таблицу Склад.
-		/// </summary>
-		public List<Sklad> SelectSklad()
-		{
-			DataTable dataTable = LoadTable("Sklad");
-			List<Sklad> sklads = new List<Sklad>();
-
-			Sklad newSklad;
-			foreach (DataRow row in dataTable.Rows)
-			{
-				newSklad = new Sklad();
-				newSklad.IdSklad = row.Field<long>("idSklad");
-				newSklad.Address = row.Field<string>("address");
-				sklads.Add(newSklad);
-			}
-			return sklads;
-		}
-
-		/// <summary>
 		/// Загружает таблицу Покупатель.
 		/// </summary>
 		public List<Client> SelectClient()
@@ -93,6 +74,25 @@ namespace ToysServer.DB
 				sellers.Add(newSeller);
 			}
 			return sellers;
+		}
+
+		/// <summary>
+		/// Загружает таблицу Склад.
+		/// </summary>
+		public List<Sklad> SelectSklad()
+		{
+			DataTable dataTable = LoadTable("Sklad");
+			List<Sklad> sklads = new List<Sklad>();
+
+			Sklad newSklad;
+			foreach (DataRow row in dataTable.Rows)
+			{
+				newSklad = new Sklad();
+				newSklad.IdSklad = row.Field<long>("idSklad");
+				newSklad.Address = row.Field<string>("address");
+				sklads.Add(newSklad);
+			}
+			return sklads;
 		}
 
 		/// <summary>

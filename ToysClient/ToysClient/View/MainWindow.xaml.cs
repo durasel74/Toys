@@ -19,6 +19,7 @@ namespace ToysClient.View
 	public partial class MainWindow : Window
 	{
 		private ViewModel viewModel;
+		private TabItem lastTab;
 
 		public MainWindow()
 		{
@@ -30,9 +31,10 @@ namespace ToysClient.View
 		private void TabChanged(Object sender, SelectionChangedEventArgs args)
 		{
 			var tc = sender as TabControl;
-			if (tc != null)
+			if (tc != null && tc.SelectedItem != lastTab)
 			{
 				var item = tc.SelectedItem as TabItem;
+				lastTab = item;
 				var header = item?.Header as string;
 				if (header != null)
 				{
