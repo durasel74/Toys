@@ -49,6 +49,28 @@
                 </DataTrigger>
             </Style.Triggers>
         </Style>
+
+        <Style x:Key="DeleteButtonStyle" TargetType="Button"
+               BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Content" Value="Удалить"/>
+            <Setter Property="Command" Value="{Binding DeleteCommand}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding UserIsAdmin}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ChangeButtonStyle" TargetType="Button"
+               BasedOn="{StaticResource ButtonStyle}">
+            <Setter Property="Content" Value="Изменить"/>
+            <Setter Property="Command" Value="{Binding ChangeCommand}"/>
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding UserIsAdmin}" Value="False">
+                    <Setter Property="IsEnabled" Value="False"/>
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid>
@@ -88,13 +110,13 @@
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" 
-                                                IsReadOnly="True" 
+                                                IsReadOnly="False"
                                                 Binding="{Binding IdClient}"/>
                             <DataGridTextColumn Header="ФИО" 
-                                                IsReadOnly="True" 
+                                                IsReadOnly="False"
                                                 Binding="{Binding Sfm}"/>
                             <DataGridTextColumn Header="Номер телефона"
-                                                IsReadOnly="True"
+                                                IsReadOnly="False"
                                                 Binding="{Binding PhoneNumber}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -103,6 +125,10 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addclient"/>
+                        <Button Style="{StaticResource ChangeButtonStyle}"
+                                CommandParameter="changeclient"/>
+                        <Button Style="{StaticResource DeleteButtonStyle}"
+                                CommandParameter="deleteclient"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
                                 CommandParameter="getclients"/>
                     </StackPanel>
@@ -125,13 +151,10 @@
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding IdSeller}"/>
                             <DataGridTextColumn Header="ФИО" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding Sfm}"/>
                             <DataGridTextColumn Header="Номер телефона"
-                                                IsReadOnly="True"
                                                 Binding="{Binding PhoneNumber}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -162,10 +185,8 @@
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                IsReadOnly="True"
                                                 Binding="{Binding IdSklad}"/>
                             <DataGridTextColumn Header="Адрес"
-                                                IsReadOnly="True"
                                                 Binding="{Binding Address}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -196,22 +217,17 @@
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                IsReadOnly="True" 
                                                 Binding="{Binding IdToy}"/>
                             <DataGridTextColumn Header="ID склада" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding IdSklad}"/>
                             <DataGridTextColumn Header="Название" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding Name}"/>
                             <DataGridTextColumn Header="Стоимость" 
                                                 IsReadOnly="True" 
                                                 Binding="{Binding Cost}"/>
                             <DataGridTextColumn Header="Дата выпуска"
-                                                IsReadOnly="True"
                                                 Binding="{Binding ReleaseDate}"/>
                             <DataGridTextColumn Header="Описание"
-                                                IsReadOnly="True"
                                                 Binding="{Binding Info}"/>
                         </DataGrid.Columns>
                     </DataGrid>
@@ -242,22 +258,16 @@
                               ColumnHeaderHeight="40" FontSize="18">
                         <DataGrid.Columns>
                             <DataGridTextColumn Header="ID"
-                                                IsReadOnly="True" 
                                                 Binding="{Binding Id}"/>
                             <DataGridTextColumn Header="ID игрушки" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding IdToy}"/>
                             <DataGridTextColumn Header="ID покупателя" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding IdClient}"/>
                             <DataGridTextColumn Header="ID продовца" 
-                                                IsReadOnly="True" 
                                                 Binding="{Binding IdSeller}"/>
                             <DataGridTextColumn Header="Количество"
-                                                IsReadOnly="True"
                                                 Binding="{Binding Count}"/>
                             <DataGridTextColumn Header="Дата"
-                                                IsReadOnly="True"
                                                 Binding="{Binding Date}"/>
                         </DataGrid.Columns>
                     </DataGrid>

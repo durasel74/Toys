@@ -42,5 +42,29 @@ namespace ToysServer.DB
 				$"VALUES ('{seller.Sfm}', '{seller.PhoneNumber}')";
 			AddRow(request);
 		}
+
+		public void AddSklad(Sklad sklad)
+		{
+			string request;
+			request = $"INSERT INTO Sklad(address)" +
+				$"VALUES ('{sklad.Address}')";
+			AddRow(request);
+		}
+
+		public void AddToy(Toy toy)
+		{
+			string request;
+			request = $"INSERT INTO Toys(idSklad, name, cost, releaseDate, info)" +
+				$"VALUES ({toy.IdSklad}, '{toy.Name}', {toy.Cost}, '{toy.ReleaseDate}', '{toy.Info}')";
+			AddRow(request);
+		}
+
+		public void AddJournal(Journal journal)
+		{
+			string request;
+			request = $"INSERT INTO Journal(idToy, idClient, idSeller, count, date)" +
+				$"VALUES ({journal.IdToy}, {journal.IdClient}, {journal.IdSeller}, {journal.Count}, '{journal.Date}')";
+			AddRow(request);
+		}
 	}
 }

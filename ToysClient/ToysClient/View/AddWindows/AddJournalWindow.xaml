@@ -65,19 +65,19 @@
                      UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Style="{StaticResource TextBoxStyle}" Grid.Row="1" 
-                     Grid.Column="1" Text="{Binding Name, 
+                     Grid.Column="1" Text="{Binding IdClient, 
                      UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Style="{StaticResource TextBoxStyle}" Grid.Row="2" 
-                     Grid.Column="1" Text="{Binding Cost, 
+                     Grid.Column="1" Text="{Binding IdSeller, 
                      UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Style="{StaticResource TextBoxStyle}" Grid.Row="3" 
-                     Grid.Column="1" Text="{Binding ReleaseDate, 
+                     Grid.Column="1" Text="{Binding Count, 
                      UpdateSourceTrigger=PropertyChanged}"/>
 
             <TextBox Style="{StaticResource TextBoxStyle}" Grid.Row="4" 
-                     Grid.Column="1" Text="{Binding Info, 
+                     Grid.Column="1" Text="{Binding Date, 
                      UpdateSourceTrigger=PropertyChanged}"/>
         </Grid>
         <!--#endregion-->

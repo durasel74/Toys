@@ -15,6 +15,8 @@ namespace ToysServer.DB
 		private DBSelector selector;
 		private DBRequester requester;
 		private DBAdder adder;
+		private DBDeleter deleter;
+		private DBChanger changer;
 
 		public DBWorker(string dataBasePath)
 		{
@@ -24,6 +26,8 @@ namespace ToysServer.DB
 			selector = new DBSelector(connection);
 			requester = new DBRequester(connection);
 			adder = new DBAdder(connection);
+			deleter = new DBDeleter(connection);
+			changer = new DBChanger(connection);
 		}
 		~DBWorker() => Dispose();
 		public virtual void Dispose() => connection.Close();
@@ -42,5 +46,12 @@ namespace ToysServer.DB
 
 		public void AddClient(Client client) => adder.AddClient(client);
 		public void AddSeller(Seller seller) => adder.AddSeller(seller);
+		public void AddSklad(Sklad sklad) => adder.AddSklad(sklad);
+		public void AddToy(Toy toy) => adder.AddToy(toy);
+		public void AddJournal(Journal journal) => adder.AddJournal(journal);
+
+		public void DeleteClient(Client client) => deleter.DeleteClient(client);
+
+		public void ChangeClient(List<Client> clients) => changer.ChangeClient(clients);
 	}
 }

@@ -18,6 +18,7 @@ namespace ToysClient.VM
 		private string currentRequest;
 		private string requestInfo;
 		private bool userIsAdmin;
+		private Object selectedElement;
 
 		public ViewModel()
 		{
@@ -43,6 +44,15 @@ namespace ToysClient.VM
 		public bool UserIsAdmin => userIsAdmin;
 		public string AdminPassword => "xl107";
 
+		public Object SelectedElement
+		{
+			get { return selectedElement; }
+			set
+			{
+				selectedElement = value;
+				OnPropertyChanged("SelectedElement");
+			}
+		}
 
 		public string CurrentRequest
 		{
@@ -146,8 +156,76 @@ namespace ToysClient.VM
 									  AddToy();
 									  break;
 								  case "addjournal":
-
+								  	  AddJournal();
 									  break;
+							  }
+						  }
+					  }));
+			}
+		}
+
+		private ButtonCommand deleteCommand;
+		public ButtonCommand DeleteCommand
+		{
+			get
+			{
+				return deleteCommand ??
+					  (deleteCommand = new ButtonCommand(obj =>
+					  {
+						  var command = obj as string;
+						  if (command != null)
+						  {
+							  switch (command.ToLower())
+							  {
+								  case "deleteclient":
+									  DeleteClient();
+									  break;
+								//   case "addseller":
+								// 	  AddSeller();
+								// 	  break;
+								//   case "addsklad":
+								// 	  AddSklad();
+								// 	  break;
+								//   case "addtoy":
+								// 	  AddToy();
+								// 	  break;
+								//   case "addjournal":
+								//   	  AddJournal();
+								// 	  break;
+							  }
+						  }
+					  }));
+			}
+		}
+
+		private ButtonCommand changeCommand;
+		public ButtonCommand ChangeCommand
+		{
+			get
+			{
+				return changeCommand ??
+					  (changeCommand = new ButtonCommand(obj =>
+					  {
+						  var command = obj as string;
+						  if (command != null)
+						  {
+							  switch (command.ToLower())
+							  {
+								  case "changeclient":
+									  ChangeClient();
+									  break;
+								//   case "addseller":
+								// 	  AddSeller();
+								// 	  break;
+								//   case "addsklad":
+								// 	  AddSklad();
+								// 	  break;
+								//   case "addtoy":
+								// 	  AddToy();
+								// 	  break;
+								//   case "addjournal":
+								//   	  AddJournal();
+								// 	  break;
 							  }
 						  }
 					  }));
@@ -319,6 +397,55 @@ namespace ToysClient.VM
 				else
 					GetCommand.Execute("gettoys");
 			}
+		}
+
+		private void AddJournal()
+		{
+			var addJournalWindow = new AddJournalWindow();
+			if (addJournalWindow.ShowDialog() == true)
+			{
+				var newJournal = addJournalWindow.NewJournal;
+				string json = JsonConvert.SerializeObject(newJournal);
+				string command = "addjournal/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на создание не был выполнен");
+				else
+					GetCommand.Execute("getJournals");
+			}
+		}
+
+		private void DeleteClient()
+		{
+			var deleteClientWindow = new DeleteClientWindow(this);
+			if (deleteClientWindow.ShowDialog() == true)
+			{
+				var delClient = SelectedElement as Client;
+				if (delClient == null) return;
+				string json = JsonConvert.SerializeObject(delClient);
+				string command = "deleteclient/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на удаление не был выполнен");
+				else
+					GetCommand.Execute("getclients");
+				SelectedElement = null;
+			}
+		}
+
+		private void ChangeClient()
+		{
+			List<Client> clients = new List<Client>(Clients);
+			string json = JsonConvert.SerializeObject(clients);
+			string command = "changeclients/" + json;
+			var resultRequest = client.SendRequest(command);
+			if (resultRequest == String.Empty) return;
+			if (resultRequest.ToLower() != "ok")
+				MessageBox.Show("Запрос на изменение не был выполнен");
+			else
+				GetCommand.Execute("getclients");
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;
