@@ -51,6 +51,10 @@ namespace ToysServer.DB
 		public void AddJournal(Journal journal) => adder.AddJournal(journal);
 
 		public void DeleteClient(Client client) => deleter.DeleteClient(client);
+		public void DeleteSeller(Seller seller) => deleter.DeleteSeller(seller);
+		public void DeleteSklad(Sklad sklad) => deleter.DeleteSklad(sklad);
+		public void DeleteToy(Toy toy) => deleter.DeleteToy(toy);
+		public void DeleteJournal(Journal journal) => deleter.DeleteJournal(journal);
 
 		public void ChangeClient(List<Client> clients) => changer.ChangeClient(clients);
 	}

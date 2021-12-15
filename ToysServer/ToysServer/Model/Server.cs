@@ -151,7 +151,7 @@ namespace ToysServer.Model
                     break;
                 case "addclient":
                     result = AddClient();
-                    Console.WriteLine("Добавление клиента");
+                    Console.WriteLine("Добавление покупателя");
                     break;
                 case "addseller":
                     result = AddSeller();
@@ -171,11 +171,27 @@ namespace ToysServer.Model
                     break;
                 case "deleteclient":
                     result = DeleteClient();
-                    Console.WriteLine("Удаление клиента");
+                    Console.WriteLine("Удаление покупателя");
+                    break;
+                case "deleteseller":
+                    result = DeleteSeller();
+                    Console.WriteLine("Удаление продавца");
+                    break;
+                case "deletesklad":
+                    result = DeleteSklad();
+                    Console.WriteLine("Удаление склада");
+                    break;
+                case "deletetoy":
+                    result = DeleteToy();
+                    Console.WriteLine("Удаление игрушки");
+                    break;
+                case "deletejournal":
+                    result = DeleteJournal();
+                    Console.WriteLine("Удаление журнала");
                     break;
                 case "changeclient":
                     result = ChangeClient();
-                    Console.WriteLine("Обновление клиентов");
+                    Console.WriteLine("Обновление покупателей");
                     break;
             }
             return result;
@@ -253,6 +269,58 @@ namespace ToysServer.Model
             {
                 var newClient = JsonConvert.DeserializeObject<Client>(jsonMessage);
                 dbWorker.DeleteClient(newClient);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string DeleteSeller()
+        {
+            string result = "";
+            try
+            {
+                var newSeller = JsonConvert.DeserializeObject<Seller>(jsonMessage);
+                dbWorker.DeleteSeller(newSeller);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string DeleteSklad()
+        {
+            string result = "";
+            try
+            {
+                var newSklad = JsonConvert.DeserializeObject<Sklad>(jsonMessage);
+                dbWorker.DeleteSklad(newSklad);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string DeleteToy()
+        {
+            string result = "";
+            try
+            {
+                var newToy = JsonConvert.DeserializeObject<Toy>(jsonMessage);
+                dbWorker.DeleteToy(newToy);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string DeleteJournal()
+        {
+            string result = "";
+            try
+            {
+                var newJournal = JsonConvert.DeserializeObject<Journal>(jsonMessage);
+                dbWorker.DeleteJournal(newJournal);
                 result = "OK";
             }
             catch { result = "Error"; }

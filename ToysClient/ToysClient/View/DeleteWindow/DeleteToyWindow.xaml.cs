@@ -10,25 +10,25 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using ToysClient.Model;
+using ToysClient.VM;
 
 namespace ToysClient.View
 {
-	public partial class AddSkladWindow : Window
+	public partial class DeleteToyWindow : Window
 	{
-		public AddSkladWindow()
-		{
-			InitializeComponent();
-			this.NewSklad = new Sklad();
-			DataContext = NewSklad;
-		}
+		private ViewModel viewModel;
 
-		public Sklad NewSklad { get; set; }
+		public DeleteToyWindow() { InitializeComponent(); }
+		public DeleteToyWindow(ViewModel viewModel) : this()
+		{
+			this.viewModel = viewModel;
+			DataContext = viewModel;
+		}
 
 		private void CreateClick(object sender, RoutedEventArgs e)
 		{
-			if (NewSklad.Address != String.Empty)
-				this.DialogResult = true;
-			else MessageBox.Show("Данные о складе заполнены неверно");
+			if (viewModel.SelectedElement != null) this.DialogResult = true;
+			else MessageBox.Show("Игрушка не выбрана");
 		}
 		private void CancelClick(object sender, RoutedEventArgs e)
 		{

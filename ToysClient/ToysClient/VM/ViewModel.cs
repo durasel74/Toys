@@ -180,18 +180,18 @@ namespace ToysClient.VM
 								  case "deleteclient":
 									  DeleteClient();
 									  break;
-								//   case "addseller":
-								// 	  AddSeller();
-								// 	  break;
-								//   case "addsklad":
-								// 	  AddSklad();
-								// 	  break;
-								//   case "addtoy":
-								// 	  AddToy();
-								// 	  break;
-								//   case "addjournal":
-								//   	  AddJournal();
-								// 	  break;
+								  case "deleteseller":
+									  DeleteSeller();
+									  break;
+								  case "deletesklad":
+									  DeleteSklad();
+									  break;
+									case "deletetoy":
+									  DeleteToy();
+									  break;
+								  case "deletejournal":
+									  DeleteJournal();
+									  break;
 							  }
 						  }
 					  }));
@@ -431,6 +431,82 @@ namespace ToysClient.VM
 					MessageBox.Show("Запрос на удаление не был выполнен");
 				else
 					GetCommand.Execute("getclients");
+				SelectedElement = null;
+			}
+		}
+
+		private void DeleteSeller()
+		{
+			var deleteSellerWindow = new DeleteSellerWindow(this);
+			if (deleteSellerWindow.ShowDialog() == true)
+			{
+				var delSeller = SelectedElement as Seller;
+				if (delSeller == null) return;
+				string json = JsonConvert.SerializeObject(delSeller);
+				string command = "deleteseller/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на удаление не был выполнен");
+				else
+					GetCommand.Execute("getsellers");
+				SelectedElement = null;
+			}
+		}
+
+		private void DeleteSklad()
+		{
+			var deleteSkladWindow = new DeleteSkladWindow(this);
+			if (deleteSkladWindow.ShowDialog() == true)
+			{
+				var delSklad = SelectedElement as Sklad;
+				if (delSklad == null) return;
+				string json = JsonConvert.SerializeObject(delSklad);
+				string command = "deletesklad/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на удаление не был выполнен");
+				else
+					GetCommand.Execute("getsklads");
+				SelectedElement = null;
+			}
+		}
+
+		private void DeleteToy()
+		{
+			var deleteToyWindow = new DeleteToyWindow(this);
+			if (deleteToyWindow.ShowDialog() == true)
+			{
+				var delToy = SelectedElement as Toy;
+				if (delToy == null) return;
+				string json = JsonConvert.SerializeObject(delToy);
+				string command = "deletetoy/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на удаление не был выполнен");
+				else
+					GetCommand.Execute("gettoys");
+				SelectedElement = null;
+			}
+		}
+
+		private void DeleteJournal()
+		{
+			var deleteJournalWindow = new DeleteJournalWindow(this);
+			if (deleteJournalWindow.ShowDialog() == true)
+			{
+				var delJournal = SelectedElement as Journal;
+				if (delJournal == null) return;
+				string json = JsonConvert.SerializeObject(delJournal);
+				string command = "deletejournal/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на удаление не был выполнен");
+				else
+					GetCommand.Execute("getjournals");
 				SelectedElement = null;
 			}
 		}

@@ -28,7 +28,7 @@ namespace ToysClient.View
 		private void CreateClick(object sender, RoutedEventArgs e)
 		{
 			if (viewModel.SelectedElement != null) this.DialogResult = true;
-			else MessageBox.Show("Данные о клиенте заполнены неверно");
+			else MessageBox.Show("Покупатель не выбран");
 		}
 		private void CancelClick(object sender, RoutedEventArgs e)
 		{

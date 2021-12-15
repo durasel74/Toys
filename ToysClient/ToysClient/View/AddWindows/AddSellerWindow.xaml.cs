@@ -31,7 +31,7 @@ namespace ToysClient.View
 			{
 				this.DialogResult = true;
 			}
-			else MessageBox.Show("Данные о клиенте заполнены неверно");
+			else MessageBox.Show("Данные о продавце заполнены неверно");
 		}
 		private void CancelClick(object sender, RoutedEventArgs e)
 		{

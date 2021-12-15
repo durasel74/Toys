@@ -163,6 +163,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addseller"/>
+                        <Button Style="{StaticResource DeleteButtonStyle}"
+                                CommandParameter="deleteseller"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
                                 CommandParameter="getsellers"/>
                     </StackPanel>
@@ -195,6 +197,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addsklad"/>
+                        <Button Style="{StaticResource DeleteButtonStyle}"
+                                CommandParameter="deletesklad"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
                                 CommandParameter="getsklads"/>
                     </StackPanel>
@@ -236,6 +240,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addtoy"/>
+                        <Button Style="{StaticResource DeleteButtonStyle}"
+                                CommandParameter="deletetoy"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
                                 CommandParameter="gettoys"/>
                     </StackPanel>
@@ -276,6 +282,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addjournal"/>
+                        <Button Style="{StaticResource DeleteButtonStyle}"
+                                CommandParameter="deletejournal"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
                                 CommandParameter="getjournals"/>
                     </StackPanel>

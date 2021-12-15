@@ -34,36 +34,32 @@ namespace ToysServer.DB
 			DeleteRow(request);
 		}
 
-		// public void AddSeller(Seller seller)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Seller(sfm, phoneNumber)" +
-		// 		$"VALUES ('{seller.Sfm}', '{seller.PhoneNumber}')";
-		// 	AddRow(request);
-		// }
+		public void DeleteSeller(Seller seller)
+		{
+			string request;
+			request = $"DELETE FROM Seller WHERE idSeller = {seller.IdSeller}";
+			DeleteRow(request);
+		}
 
-		// public void AddSklad(Sklad sklad)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Sklad(address)" +
-		// 		$"VALUES ('{sklad.Address}')";
-		// 	AddRow(request);
-		// }
+		public void DeleteSklad(Sklad sklad)
+		{
+			string request;
+			request = $"DELETE FROM Sklad WHERE idSklad = {sklad.IdSklad}";
+			DeleteRow(request);
+		}
 
-		// public void AddToy(Toy toy)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Toys(idSklad, name, cost, releaseDate, info)" +
-		// 		$"VALUES ({toy.IdSklad}, '{toy.Name}', {toy.Cost}, '{toy.ReleaseDate}', '{toy.Info}')";
-		// 	AddRow(request);
-		// }
-
-		// public void AddJournal(Journal journal)
-		// {
-		// 	string request;
-		// 	request = $"INSERT INTO Journal(idToy, idClient, idSeller, count, date)" +
-		// 		$"VALUES ({journal.IdToy}, {journal.IdClient}, {journal.IdSeller}, {journal.Count}, '{journal.Date}')";
-		// 	AddRow(request);
-		// }
+		public void DeleteToy(Toy toy)
+		{
+			string request;
+			request = $"DELETE FROM Toys WHERE idToy = {toy.IdToy}";
+			DeleteRow(request);
+		}
+		
+		public void DeleteJournal(Journal journal)
+		{
+			string request;
+			request = $"DELETE FROM Journal WHERE id = {journal.Id}";
+			DeleteRow(request);
+		}
 	}
 }
