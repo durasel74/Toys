@@ -14,7 +14,7 @@ namespace ToysServer.DB
 		private SQLiteConnection connection;
 		private DBSelector selector;
 		private DBRequester requester;
-		//private DBAdder adder;
+		private DBAdder adder;
 
 		public DBWorker(string dataBasePath)
 		{
@@ -23,7 +23,7 @@ namespace ToysServer.DB
 			connection.Open();
 			selector = new DBSelector(connection);
 			requester = new DBRequester(connection);
-			//adder = new DBAdder(connection);
+			adder = new DBAdder(connection);
 		}
 		~DBWorker() => Dispose();
 		public virtual void Dispose() => connection.Close();
@@ -40,17 +40,7 @@ namespace ToysServer.DB
 		public DataTable Request4() => requester.Request4();
 		public DataTable Request5() => requester.Request5();
 
-		//public void AddProduct(ProductFields productFields)
-		//{
-		//	adder.AddProduct(productFields);
-		//}
-		//public void AddClient(ClientFields clientFields)
-		//{
-		//	adder.AddClient(clientFields);
-		//}
-		//public void AddOrder(OrderFields orderFields, long clientId, long productId)
-		//{
-		//	adder.AddOrder(orderFields, clientId, productId);
-		//}
+		public void AddClient(Client client) => adder.AddClient(client);
+		public void AddSeller(Seller seller) => adder.AddSeller(seller);
 	}
 }

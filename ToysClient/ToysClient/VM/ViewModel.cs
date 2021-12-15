@@ -5,6 +5,7 @@ using System.Data;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Collections.ObjectModel;
+using System.Windows;
 using Newtonsoft.Json;
 using ToysClient.Model;
 using ToysClient.View;
@@ -41,7 +42,7 @@ namespace ToysClient.VM
 		public DataTable RequestTable { get; set; }
 		public bool UserIsAdmin => userIsAdmin;
 		public string AdminPassword => "xl107";
-		
+
 
 		public string CurrentRequest
 		{
@@ -110,7 +111,7 @@ namespace ToysClient.VM
 					  if (command != null && command != String.Empty)
 					  {
 						  string resultRequest = "";
-						  try { resultRequest = client.SendRequest(command); } 
+						  try { resultRequest = client.SendRequest(command); }
 						  catch { return; }
 						  if (resultRequest == String.Empty) return;
 						  RequestPipeline(command, resultRequest);
@@ -128,39 +129,21 @@ namespace ToysClient.VM
 					  (addCommand = new ButtonCommand(obj =>
 					  {
 						  var command = obj as string;
-						  if (command != null && command != String.Empty)
+						  if (command != null)
 						  {
-							  //var resultRequest = client.SendRequest(command);
-							  //if (resultRequest == String.Empty) return;
-							  //RequestPipeline(command, resultRequest);
+							  switch (command.ToLower())
+							  {
+								  case "addclient":
+									  AddClient();
+									  break;
+								  case "addseller":
+									  AddSeller();
+									  break;
+							  }
 						  }
 					  }));
 			}
 		}
-
-		//private ButtonCommand addProductCommand;
-		//public ButtonCommand AddProductCommand
-		//{
-		//	get
-		//	{
-		//		return addProductCommand ??
-		//		  (addProductCommand = new ButtonCommand(obj =>
-		//		  {
-		//			  ProductObject productObject = new ProductObject();
-		//			  var addProductWindow = new AddProductWindow(productObject);
-		//			  if (addProductWindow.ShowDialog() == true)
-		//			  {
-		//				  ProductFields productFields = Product.GetFieldsFrame();
-		//				  productFields.title = productObject.Title;
-		//				  productFields.cost = productObject.Cost;
-		//				  productFields.releaseDate = productObject.ReleaseDate;
-		//				  productFields.description = productObject.Description;
-		//				  db.AddProduct(productFields);
-		//				  LoadAllTables();
-		//			  }
-		//		  }));
-		//	}
-		//}
 
 		private ButtonCommand authorizationCommand;
 		public ButtonCommand AuthorizationCommand
@@ -259,6 +242,40 @@ namespace ToysClient.VM
 			var result = JsonConvert.DeserializeObject<List<Journal>>(json);
 			Journals = new ObservableCollection<Journal>(result);
 			OnPropertyChanged("Journals");
+		}
+
+		private void AddClient()
+		{
+			var addClientWindow = new AddClientWindow();
+			if (addClientWindow.ShowDialog() == true)
+			{
+				var newClient = addClientWindow.NewClient;
+				string json = JsonConvert.SerializeObject(newClient);
+				string command = "addclient/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на создание не был выполнен");
+				else
+					GetCommand.Execute("getclients");
+			}
+		}
+
+		private void AddSeller()
+		{
+			var addSellerWindow = new AddSellerWindow();
+			if (addSellerWindow.ShowDialog() == true)
+			{
+				var newSeller = addSellerWindow.NewSeller;
+				string json = JsonConvert.SerializeObject(newSeller);
+				string command = "addseller/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на создание не был выполнен");
+				else
+					GetCommand.Execute("getsellers");
+			}
 		}
 
 		public event PropertyChangedEventHandler PropertyChanged;

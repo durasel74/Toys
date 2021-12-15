@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
+using System.Linq;
 using System.Data;
 using System.Net;
 using System.Net.Sockets;
@@ -16,16 +17,17 @@ namespace ToysServer.Model
 	public class Server
 	{
         private DBWorker dbWorker;
-
         private TcpListener server;
         private Task task;
         private readonly IPAddress localAddr;
         private readonly int port;
+        private string jsonMessage;
 
         public Server(string ip, int port)
 		{
             localAddr = IPAddress.Parse(ip);
             this.port = port;
+            jsonMessage = "";
             task = new Task(RunServer);
             dbWorker = new DBWorker("DB\\ToysBD.db");
 		}
@@ -65,7 +67,6 @@ namespace ToysServer.Model
         {
             TcpClient client = server.AcceptTcpClient();
             NetworkStream stream = client.GetStream();
-
             try
             {
                 if (stream.CanRead)
@@ -79,6 +80,7 @@ namespace ToysServer.Model
                             Encoding.UTF8.GetString(readBuffer, 0, bytesRead));
                     }
                     while (stream.DataAvailable);
+
                     var result = ProcessRequest(completeMessage.ToString());
                     SendInfo(stream, result);
                 }
@@ -94,7 +96,8 @@ namespace ToysServer.Model
         public string ProcessRequest(string message)
 		{
             string result = "";
-			switch (message.ToLower())
+            string requestAddress = ParseMessage(message);
+			switch (requestAddress.ToLower())
 			{
 				case "getclients":
 					var clients = dbWorker.LoadClients();
@@ -136,8 +139,56 @@ namespace ToysServer.Model
                     var request5 = dbWorker.Request5();
                     result = JsonConvert.SerializeObject(request5);
                     break;
+                case "addclient":
+                    result = AddClient();
+                    break;
+                case "addseller":
+                    result = AddSeller();
+                    break;
             }
             return result;
+		}
+
+        private string AddClient()
+		{
+            string result = "";
+            try
+            {
+                var newClient = JsonConvert.DeserializeObject<Client>(jsonMessage);
+                dbWorker.AddClient(newClient);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string AddSeller()
+        {
+            string result = "";
+            try
+            {
+                var newSeller = JsonConvert.DeserializeObject<Seller>(jsonMessage);
+                dbWorker.AddSeller(newSeller);
+                result = "OK";
+            }
+            catch { result = "Error"; }
+            return result;
+        }
+
+        private string ParseMessage(string message)
+		{
+            var deviderIndex = message.IndexOf('/');
+            string requestAddress = message;
+            if (deviderIndex == -1) jsonMessage = "";
+            else
+			{
+                requestAddress = message.Substring(0, deviderIndex);
+                if (message.Length - 1 == requestAddress.Length)
+                    jsonMessage = "";
+                else
+                    jsonMessage = message.Substring(deviderIndex + 1);
+            }
+            return requestAddress;
 		}
 
         // Отправляет сообщение клиенту

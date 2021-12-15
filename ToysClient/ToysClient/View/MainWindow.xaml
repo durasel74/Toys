@@ -35,7 +35,7 @@
 
         <Style x:Key="UpdateButtonStyle" TargetType="Button"
                BasedOn="{StaticResource ButtonStyle}">
-            <Setter Property="Content" Value="Запросить"/>
+            <Setter Property="Content" Value="Обновить"/>
             <Setter Property="Command" Value="{Binding GetCommand}"/>
         </Style>
 
@@ -93,7 +93,7 @@
                             <DataGridTextColumn Header="ФИО" 
                                                 IsReadOnly="True" 
                                                 Binding="{Binding Sfm}"/>
-                            <DataGridTextColumn Header="Стоимость"
+                            <DataGridTextColumn Header="Номер телефона"
                                                 IsReadOnly="True"
                                                 Binding="{Binding PhoneNumber}"/>
                         </DataGrid.Columns>
@@ -103,8 +103,8 @@
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
                                 CommandParameter="addclient"/>
-                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
-                                CommandParameter="getclients"/>-->
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getclients"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -130,7 +130,7 @@
                             <DataGridTextColumn Header="ФИО" 
                                                 IsReadOnly="True" 
                                                 Binding="{Binding Sfm}"/>
-                            <DataGridTextColumn Header="Стоимость"
+                            <DataGridTextColumn Header="Номер телефона"
                                                 IsReadOnly="True"
                                                 Binding="{Binding PhoneNumber}"/>
                         </DataGrid.Columns>
@@ -139,9 +139,9 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
-                                CommandParameter="addclient"/>
-                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
-                                CommandParameter="getsellers"/>-->
+                                CommandParameter="addseller"/>
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getsellers"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -173,9 +173,9 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
-                                CommandParameter="addclient"/>
-                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
-                                CommandParameter="getsklads"/>-->
+                                CommandParameter="addsklad"/>
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getsklads"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -219,9 +219,9 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
-                                CommandParameter="addclient"/>
-                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
-                                CommandParameter="gettoys"/>-->
+                                CommandParameter="addtoy"/>
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="gettoys"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -265,9 +265,9 @@
                     <StackPanel Grid.Row="1" Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
                         <Button Style="{StaticResource AddButtonStyle}"
-                                CommandParameter="addclient"/>
-                        <!--<Button Style="{StaticResource UpdateButtonStyle}"
-                                CommandParameter="getjournals"/>-->
+                                CommandParameter="addjournal"/>
+                        <Button Style="{StaticResource UpdateButtonStyle}"
+                                CommandParameter="getjournals"/>
                     </StackPanel>
                 </Grid>
             </TabItem>
@@ -294,7 +294,8 @@
                                   SelectedValue="{Binding CurrentRequest, 
                                     Mode=TwoWay}" Width="200"/>
                         <Button Style="{StaticResource UpdateButtonStyle}"
-                                HorizontalAlignment="Right"
+                                HorizontalAlignment="Right" 
+                                Content="Запросить"
                                 Command="{Binding RequestCommmand}"/>
                         <TextBlock Text="{Binding RequestInfo}"
                                    TextWrapping="Wrap"
