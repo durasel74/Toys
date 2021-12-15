@@ -139,6 +139,15 @@ namespace ToysClient.VM
 								  case "addseller":
 									  AddSeller();
 									  break;
+								  case "addsklad":
+									  AddSklad();
+									  break;
+								  case "addtoy":
+									  AddToy();
+									  break;
+								  case "addjournal":
+
+									  break;
 							  }
 						  }
 					  }));
@@ -275,6 +284,40 @@ namespace ToysClient.VM
 					MessageBox.Show("Запрос на создание не был выполнен");
 				else
 					GetCommand.Execute("getsellers");
+			}
+		}
+
+		private void AddSklad()
+		{
+			var addSkladWindow = new AddSkladWindow();
+			if (addSkladWindow.ShowDialog() == true)
+			{
+				var newSklad = addSkladWindow.NewSklad;
+				string json = JsonConvert.SerializeObject(newSklad);
+				string command = "addsklad/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на создание не был выполнен");
+				else
+					GetCommand.Execute("getsklads");
+			}
+		}
+
+		private void AddToy()
+		{
+			var addToyWindow = new AddToyWindow();
+			if (addToyWindow.ShowDialog() == true)
+			{
+				var newToy = addToyWindow.NewToy;
+				string json = JsonConvert.SerializeObject(newToy);
+				string command = "addtoy/" + json;
+				var resultRequest = client.SendRequest(command);
+				if (resultRequest == String.Empty) return;
+				if (resultRequest.ToLower() != "ok")
+					MessageBox.Show("Запрос на создание не был выполнен");
+				else
+					GetCommand.Execute("gettoys");
 			}
 		}
 

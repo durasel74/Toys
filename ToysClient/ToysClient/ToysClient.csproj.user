@@ -7,15 +7,24 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Compile Update="View\AddClientWindow.xaml.cs">
+    <Compile Update="View\AddWindows\AddClientWindow.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <Page Update="View\AddSellerWindow.xaml">
+    <Page Update="View\AddWindows\AddJournalWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
-    <Page Update="View\AddClientWindow.xaml">
+    <Page Update="View\AddWindows\AddToyWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AddWindows\AddSkladWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AddWindows\AddSellerWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="View\AddWindows\AddClientWindow.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="View\AuthorizationWindow.xaml">

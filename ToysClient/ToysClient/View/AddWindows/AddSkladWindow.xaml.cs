@@ -13,24 +13,21 @@ using ToysClient.Model;
 
 namespace ToysClient.View
 {
-	public partial class AddSellerWindow : Window
+	public partial class AddSkladWindow : Window
 	{
-		public AddSellerWindow()
+		public AddSkladWindow()
 		{
 			InitializeComponent();
-			this.NewSeller = new Client();
-			DataContext = NewSeller;
+			this.NewSklad = new Sklad();
+			DataContext = NewSklad;
 		}
 
-		public Client NewSeller { get; set; }
+		public Sklad NewSklad { get; set; }
 
 		private void CreateClick(object sender, RoutedEventArgs e)
 		{
-			if (NewSeller.Sfm != String.Empty &&
-				NewSeller.PhoneNumber != String.Empty)
-			{
+			if (NewSklad.Address != String.Empty)
 				this.DialogResult = true;
-			}
 			else MessageBox.Show("Данные о клиенте заполнены неверно");
 		}
 		private void CancelClick(object sender, RoutedEventArgs e)
